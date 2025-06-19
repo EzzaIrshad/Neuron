@@ -12,7 +12,6 @@ import {
   PeopleIcon,
   PhotoIcon,
   ShareIcon,
-  TrashIcon,
 } from "../components/icons";
 import { Plus, XIcon, Upload as UploadIcon, FolderOpen as FolderOpenIcon } from "lucide-react";
 import { useAuthStore } from "@/stores/useAuthStore";

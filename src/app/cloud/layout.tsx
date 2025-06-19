@@ -5,7 +5,7 @@ import Sidebar from './@sidebar/default';
 import Header from './@header/default';
 
 const segoeUI = localFont({
-    src: '../fonts/segoeUI-VF.ttf',
+    src: '../fonts/SegoeUI-VF.ttf',
     display: 'swap',
     variable: '--font-segoeUi',
 });

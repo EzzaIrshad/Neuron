@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { FiHome, FiUsers, FiPieChart, FiDollarSign, FiSettings, FiMenu, FiX } from 'react-icons/fi';
+import { FiMenu, FiX } from 'react-icons/fi';
 
 export default function AdminLayout({
   children,

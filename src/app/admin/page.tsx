@@ -2,11 +2,7 @@
 
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from 'react';
-import { FiUsers, FiUploadCloud, FiDollarSign, FiPieChart, FiSettings, FiBarChart2, FiTrendingUp } from 'react-icons/fi';
-import { AppWindowIcon, CodeIcon } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
+import { useEffect } from 'react';
 import {
   Card,
   CardContent,
@@ -15,8 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
   Tabs,
   TabsContent,
@@ -27,7 +21,6 @@ import { OrderTable} from '@/components/admin/order-table';
 import CircularProgress from '@/components/ui/circular-progress';
 import React from 'react';
 import { useProfileStore } from '@/stores/useProfileStore';
-import { toast } from 'sonner';
 import { UserModel } from '@/types/UserModel';
 import { YearChart } from '@/components/admin/year-chart';
 import { TotalUserChart } from '@/components/admin/total-user-chart';
@@ -42,7 +35,6 @@ const Home = () => {
     
     const { user } = useAuthStore();
     const { users, loading, fetchUsers, reset } = useProfileStore();
-    const [progress, setProgress] = React.useState([]);
     const [totalOrders, setTotalOrderProgress] = React.useState(0);
     const [paidOrders, setPaidOrderProgress] = React.useState(0);
     const [pendingOrders, setPendingOrderProgress] = React.useState(0);
