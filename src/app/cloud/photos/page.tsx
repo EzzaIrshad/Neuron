@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useSharedWithOthersStore } from '@/stores/sharedWithOthersStore';
+// import { useSharedWithOthersStore } from '@/stores/sharedWithOthersStore';
 import { Button } from "@/components/ui/button";
 import {
   MoreHorizontal,
@@ -445,10 +445,8 @@ const PhotosPage = () => {
       return;
     }
 
-    let animationStartTimestamp = Date.now();
-    let progressInterval: NodeJS.Timeout;
-
-    progressInterval = setInterval(() => {
+    const animationStartTimestamp = Date.now();
+    const progressInterval = setInterval(() => {
       const elapsed = Date.now() - animationStartTimestamp;
       const percent = Math.min((elapsed / MIN_ANIMATION_DURATION) * 99, 99);
       setProgress(Math.round(percent));
@@ -536,13 +534,13 @@ const PhotosPage = () => {
 
   // Placeholder handlers
   const handleUploadPhoto = useCallback(() => toast.info("Upload photo functionality coming soon!"), []);
-  const handleDownloadImage = useCallback((src: string) => toast.info("Download functionality coming soon!"), []);
+  const handleDownloadImage = useCallback(() => toast.info("Download functionality coming soon!"), []);
   const handleShareImage = (id: string) => {
       setFileIdToShare(id);
       setShareDialogOpen(true);
     };
-  const handleCreateAlbum = useCallback(() => toast.info("Create new album feature will be available soon!"), []);
-  const handleViewMap = useCallback(() => toast.info("View map functionality coming soon!"), []);
+  // const handleCreateAlbum = useCallback(() => toast.info("Create new album feature will be available soon!"), []);
+  // const handleViewMap = useCallback(() => toast.info("View map functionality coming soon!"), []);
   const handleCategoryClick = useCallback((categoryName: string) => toast.info(`Viewing ${categoryName} category - coming soon!`), []);
     // State for selected album
 const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);

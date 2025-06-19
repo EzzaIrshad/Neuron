@@ -20,11 +20,8 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 import { UserModel } from "@/types/UserModel"
-import { toast } from "sonner"
 
 export const description = "A radial chart with stacked sections"
-
-
 
 const chartConfig = {
   paid: {

@@ -4,8 +4,7 @@ import { useEffect, useRef } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { createClient } from '@/lib/supabase/client';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { useRouter } from 'next/navigation';
-import { ValidRole } from '@/types/UserModel';
+// import { useRouter } from 'next/navigation';
 
 declare const google: any;
 
@@ -14,7 +13,7 @@ interface Props {
 }
 
 export default function GoogleLoginButton({ onUserNotFound }: Props) {
-  const router = useRouter();
+  // const router = useRouter();
   const supabase = createClient();
   const nonceRef = useRef<string | null>(null);
 

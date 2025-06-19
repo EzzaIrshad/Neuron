@@ -45,7 +45,7 @@ import { createClient } from "@/lib/supabase/client";
 export default function Home() {
   const router = useRouter();
   const { user } = useAuthStore();
-  const { files, fetchFiles, updateFile, deleteFile } = useCloudStore();
+  const { files, fetchFiles, updateFile } = useCloudStore();
   const [editFileId, setEditFileId] = useState<string>("");
   const [editName, setEditName] = useState("");
   const [rowSelection, setRowSelection] = useState({});

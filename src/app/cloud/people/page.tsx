@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import React from 'react'
 
 export default function Page() {
@@ -63,7 +63,7 @@ export default function Page() {
         },
 
     ]
-    const router = useRouter();
+    // const router = useRouter();
     return (
         <div className="flex flex-col gap-6 w-full text-4xl h-full px-15.5">
             <h2 className="text-2xl font-medium py-[3vh] border-b border-b-[#A2A2A2]">People</h2>

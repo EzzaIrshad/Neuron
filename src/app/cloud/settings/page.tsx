@@ -1,4 +1,4 @@
-import { FiSettings, FiUser, FiLock, FiBell, FiDatabase, FiShare2, FiCreditCard, FiHelpCircle, FiMoon, FiLogOut } from 'react-icons/fi';
+import { FiSettings, FiUser, FiBell, FiDatabase, FiShare2, FiCreditCard, FiHelpCircle, FiMoon, FiLogOut } from 'react-icons/fi';
 
 const SettingsPage = () => {
   const settingsCategories = [

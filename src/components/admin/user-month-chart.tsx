@@ -57,8 +57,7 @@ const chartData =
       )
     : [];
 
-const totalVisitors =
-  chartData.length > 0 ? chartData[0].free + chartData[0].paid : 0;
+// const totalVisitors = chartData.length > 0 ? chartData[0].free + chartData[0].paid : 0;
   return (
     <Card>
       <CardHeader className="items-center pb-4">
@@ -95,7 +94,7 @@ const totalVisitors =
         <div className="flex items-center gap-2 leading-none font-medium">
           Trending up by 0.0001% this month <TrendingUp className="h-4 w-4" />
         </div>
-        <div className="text-muted-foreground hidden flex items-center gap-2 leading-none">
+        <div className="text-muted-foreground flex items-center gap-2 leading-none">
           January - June 2025
         </div>
       </CardFooter>

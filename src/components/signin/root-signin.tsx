@@ -11,7 +11,7 @@ interface SignInProps {
     onUserNotFound: () => void; // Add this prop for handling user not found
 }
 
-function RootSignIn({ setShowSignin, isUserRegistered, onUserNotFound }: SignInProps) {
+function RootSignIn({ setShowSignin, onUserNotFound }: SignInProps) {
     const [showSignupModal, setShowSignupModal] = useState(false);
 
     const handleUserNotFound = () => {

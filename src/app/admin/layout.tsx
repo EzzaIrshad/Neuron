@@ -10,7 +10,7 @@ export default function AdminLayout({
   header?: React.ReactNode;
 }>) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('dashboard');
+  // const [activeTab, setActiveTab] = useState('dashboard');
   const [rotationAngle, setRotationAngle] = useState(0);
 
   // Gradient rotation animation

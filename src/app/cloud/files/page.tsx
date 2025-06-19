@@ -25,7 +25,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
@@ -49,8 +48,7 @@ import { CloudModel } from "@/types/CloudModel";
 export default function Files() {
   const router = useRouter();
   const { user } = useAuthStore();
-  const { files, fetchFiles, updateFile, deleteFile } = useCloudStore();
-
+  const { files, fetchFiles, updateFile } = useCloudStore();
   const [editFileId, setEditFileId] = useState<string | null>(null);
   const [editName, setEditName] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);

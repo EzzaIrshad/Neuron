@@ -5,14 +5,14 @@ import { useState } from 'react';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useDriveStore } from '@/stores/useCloudStore';
+// import { useDriveStore } from '@/stores/useCloudStore';
 import Image from 'next/image';
 import { DropdownMenuItem, DropdownMenuShortcut } from '@/components/ui/dropdown-menu';
 
 export function CreateFolderDialogItem() {
   const [open, setOpen] = useState(false);
   const [folderName, setFolderName] = useState('');
-  const createFolder = useDriveStore((state) => state.createFolder);
+  // const createFolder = useDriveStore((state) => state.createFolder);
 
   const handleCreate = async () => {
     // if (!folderName.trim()) return;

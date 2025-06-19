@@ -8,7 +8,7 @@ import  { createClient } from "@/lib/supabase/client";
 import { CloudModel } from "@/types/CloudModel";
 
 const Shared = () => {
-  const { files, loading, fetchFiles } = useCloudStore();
+  const { loading, fetchFiles } = useCloudStore();
   const [sharedFiles, setSharedFiles] = useState<{
     sharedWithMe: CloudModel[];
     sharedByMe: CloudModel[];

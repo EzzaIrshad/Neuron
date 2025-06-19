@@ -12,7 +12,7 @@ interface ProfileStore {
 
 const supabase = createClient();
 
-export const useProfileStore = create<ProfileStore>((set, get) => {
+export const useProfileStore = create<ProfileStore>((set) => {
   let channel: ReturnType<typeof supabase.channel> | null = null;
 
   const fetchUsers = async () => {

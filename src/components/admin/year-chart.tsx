@@ -26,9 +26,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { UserModel } from "@/types/UserModel"
-import { userSchema } from "./order-table"
-import z from "zod"
-import { toast } from "sonner";
 
 export const description = "An interactive area chart"
 

@@ -83,9 +83,9 @@ function EmailVerification() {
             <button
                 onClick={handleResendCode}
                 disabled={timeRemaining > 0}
-                className="text-xs font-medium tracking-wide leading-4 text-center text-[##808080]"
+                className="text-xs font-medium tracking-wide leading-4 text-center text-[#808080]"
             >
-                Didn't receive a code? ({timeRemaining}s)
+                Didn&apos;t receive a code? ({timeRemaining}s)
             </button>
 
             <div className="flex gap-4">

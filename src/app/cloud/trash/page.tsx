@@ -1,7 +1,5 @@
 "use client";
-import { useState, useEffect, useMemo } from "react";
-import RecentFiles from "../components/recentFiles";
-import { ChevronIcon, RecycleIcon } from "../components/icons";
+import { useState, useEffect } from "react";
 import { useCloudStore } from "@/stores/useCloudStore";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useRouter } from "next/navigation";
@@ -15,16 +13,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp, MoreHorizontal } from "lucide-react";
 
-
-
-
-
-
-
-
 const Trash = () => {
   const router = useRouter();
-  const { files, fetchFiles, updateFile, deleteFile } = useCloudStore();
+  const { files, fetchFiles } = useCloudStore();
   const { user } = useAuthStore();
   const [editFileId, setEditFileId] = useState<string>("");
   const [editName, setEditName] = useState("");
@@ -46,31 +37,31 @@ const Trash = () => {
       }
     }, [user, fetchFiles]);
 
-    const trashFiles = useMemo<CloudModel[]>(() =>
-  files
-    .filter((file) => file.is_trashed == true)
-    .map((file) => ({
-      id: file.id,
-      name: file.name,
-      is_folder: file.is_folder,
-      file_url: file.file_url,
-      type: file.type,
-      mime_type: file.mime_type,
-      file_extension: file.file_extension,
-      size: file.size,
-      user_id: file.user_id,
-      is_shared: file.is_shared,
-      shared_with: file.shared_with,
-      is_liked: file.is_liked,
-      is_trashed: file.is_trashed,
-      description: file.description,
-      tags: file.tags,
-      device_name: file.device_name,
-      file_origin: file.file_origin,
-      created_at: file.created_at,
-      updated_at: file.updated_at,
-    }))
-, [files]);
+//     const trashFiles = useMemo<CloudModel[]>(() =>
+//   files
+//     .filter((file) => file.is_trashed == true)
+//     .map((file) => ({
+//       id: file.id,
+//       name: file.name,
+//       is_folder: file.is_folder,
+//       file_url: file.file_url,
+//       type: file.type,
+//       mime_type: file.mime_type,
+//       file_extension: file.file_extension,
+//       size: file.size,
+//       user_id: file.user_id,
+//       is_shared: file.is_shared,
+//       shared_with: file.shared_with,
+//       is_liked: file.is_liked,
+//       is_trashed: file.is_trashed,
+//       description: file.description,
+//       tags: file.tags,
+//       device_name: file.device_name,
+//       file_origin: file.file_origin,
+//       created_at: file.created_at,
+//       updated_at: file.updated_at,
+//     }))
+// , [files]);
 
 
 
@@ -258,24 +249,24 @@ const Trash = () => {
     },
   });
 
-  const handleEdit = async () => {
-    if (!editName.trim()) {
-      toast.error("Name cannot be empty");
-      return;
-    }
-    if (/[<>:"/\\|?*]/.test(editName)) {
-      toast.error("Name contains invalid characters");
-      return;
-    }
-    try {
-      await updateFile(editFileId, { name: editName });
-      toast.success(`Renamed to ${editName}`);
-      setEditFileId("");
-      setEditName("");
-    } catch (error: any) {
-      toast.error(`Failed to rename: ${error.message}`);
-    }
-  };
+  // const handleEdit = async () => {
+  //   if (!editName.trim()) {
+  //     toast.error("Name cannot be empty");
+  //     return;
+  //   }
+  //   if (/[<>:"/\\|?*]/.test(editName)) {
+  //     toast.error("Name contains invalid characters");
+  //     return;
+  //   }
+  //   try {
+  //     await updateFile(editFileId, { name: editName });
+  //     toast.success(`Renamed to ${editName}`);
+  //     setEditFileId("");
+  //     setEditName("");
+  //   } catch (error: any) {
+  //     toast.error(`Failed to rename: ${error.message}`);
+  //   }
+  // };
 
  
   

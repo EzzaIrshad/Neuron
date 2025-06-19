@@ -34,7 +34,7 @@ const Home = () => {
     const router = useRouter();
     
     const { user } = useAuthStore();
-    const { users, loading, fetchUsers, reset } = useProfileStore();
+    const { users, fetchUsers } = useProfileStore();
     const [totalOrders, setTotalOrderProgress] = React.useState(0);
     const [paidOrders, setPaidOrderProgress] = React.useState(0);
     const [pendingOrders, setPendingOrderProgress] = React.useState(0);
