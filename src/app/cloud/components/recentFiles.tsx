@@ -11,7 +11,7 @@ const RecentFiles = ({ id }: RecentFilesProps) => {
     const [recentFiles, setRecentFiles] = useState([
         {
             id: "1",
-            src: "/images/folder.png",
+            src: "/images/icons/folder.png",
             name: "Desktop",
             modifiedDate: "Sep 17, 2024",
             size: "38.9 MB",
@@ -20,7 +20,7 @@ const RecentFiles = ({ id }: RecentFilesProps) => {
         },
         {
             id: "2",
-            src: "/images/folder.png",
+            src: "/images/icons/folder.png",
             name: "Documents",
             modifiedDate: "Sep 25, 2024",
             size: "58.9 MB",
@@ -29,7 +29,7 @@ const RecentFiles = ({ id }: RecentFilesProps) => {
         },
         {
             id: "3",
-            src: "/images/folder.png",
+            src: "/images/icons/folder.png",
             name: "Desktop",
             modifiedDate: "Sep 17, 2024",
             size: "38.9 MB",
@@ -38,7 +38,7 @@ const RecentFiles = ({ id }: RecentFilesProps) => {
         },
         {
             id: "4",
-            src: "/images/folder.png",
+            src: "/images/icons/folder.png",
             name: "Desktop",
             modifiedDate: "Sep 17, 2024",
             size: "38.9 MB",
@@ -47,7 +47,7 @@ const RecentFiles = ({ id }: RecentFilesProps) => {
         },
         {
             id: "5",
-            src: "/images/folder.png",
+            src: "/images/icons/folder.png",
             name: "Desktop",
             modifiedDate: "Sep 17, 2024",
             size: "38.9 MB",
@@ -56,7 +56,7 @@ const RecentFiles = ({ id }: RecentFilesProps) => {
         },
         {
             id: "6",
-            src: "/images/folder.png",
+            src: "/images/icons/folder.png",
             name: "Desktop",
             modifiedDate: "Sep 17, 2024",
             size: "38.9 MB",
@@ -65,7 +65,7 @@ const RecentFiles = ({ id }: RecentFilesProps) => {
         },
         {
             id: "7",
-            src: "/images/folder.png",
+            src: "/images/icons/folder.png",
             name: "Desktop",
             modifiedDate: "Sep 17, 2024",
             size: "38.9 MB",
@@ -139,6 +139,8 @@ const RecentFiles = ({ id }: RecentFilesProps) => {
                                 <div className="flex flex-1 gap-6 items-center">
                                     <div className="max-2xl:size-5 size-6">
                                         <Image
+                                            width={24}
+                                            height={24}
                                             src={item.src}
                                             alt=""
                                             className="w-full h-full object-cover"
@@ -166,9 +168,9 @@ const RecentFiles = ({ id }: RecentFilesProps) => {
                                 {
                                     id === "memory" && (
                                         <div className="flex flex-1 items-center">
-                                            <Image src="/images/p1.png" alt="People" className="size-8 rounded-full" />
-                                            <Image src="/images/p2.png" alt="People" className="size-8 rounded-full -ml-1.5" />
-                                            <Image src="/images/p3.png" alt="People" className="size-8 rounded-full -ml-1.5" />
+                                            <Image src="/images/p1.png" alt="People" width={32} height={32} className="rounded-full" />
+                                            <Image src="/images/p2.png" alt="People" width={32} height={32} className="rounded-full -ml-1.5" />
+                                            <Image src="/images/p3.png" alt="People" width={32} height={32} className="rounded-full -ml-1.5" />
                                             <div className="size-8 rounded-full -ml-1.5 bg-[#e1e1e1] flex items-center justify-center text-xs text-[#484848] font-semibold">+2</div>
                                         </div>
                                     )
