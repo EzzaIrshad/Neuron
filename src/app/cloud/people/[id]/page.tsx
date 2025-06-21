@@ -6,12 +6,10 @@ import SharedHeader from '../../components/shared_header';
 import RecentFiles from '../../components/recentFiles';
 
 
-interface PageProps {
-  params: { id: string };
-}
 
-export default async function ProfileDetail({ params }: PageProps) {
-  const { id } = params;
+
+export default async function ProfileDetail({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
 
     const profiles = {
         '1': { name: "Alina Hania", avatar: "/images/p1.png" },
