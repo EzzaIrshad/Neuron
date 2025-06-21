@@ -1,12 +1,34 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { createClient } from '@/lib/supabase/client';
 import { useAuthStore } from '@/stores/useAuthStore';
 // import { useRouter } from 'next/navigation';
 
-declare const google: any;
+declare const google: {
+  accounts: {
+    id: {
+      initialize: (options: {
+        client_id: string;
+        callback: (response: { credential: string }) => void;
+        nonce: string;
+        use_fedcm_for_prompt: boolean;
+      }) => void;
+      renderButton: (
+        parent: HTMLElement | null,
+        options: {
+          theme: string;
+          size: string;
+          text: string;
+          shape: string;
+          logo_alignment: string;
+          width: number;
+        }
+      ) => void;
+    };
+  };
+};
 
 interface Props {
   onUserNotFound: () => void;
@@ -27,48 +49,7 @@ export default function GoogleLoginButton({ onUserNotFound }: Props) {
     return [nonce, hashedNonce];
   };
 
-  useEffect(() => {
-    if (!process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID) {
-      console.error('Google Client ID is not set');
-      return;
-    }
-
-    const initGoogleSignIn = async () => {
-      const [generatedNonce, hashedNonce] = await generateNonce();
-      nonceRef.current = generatedNonce;
-
-      google.accounts.id.initialize({
-        client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-        callback: handleCredentialResponse,
-        nonce: hashedNonce,
-        use_fedcm_for_prompt: true,
-      });
-
-      google.accounts.id.renderButton(document.getElementById('google-button'), {
-        theme: 'outline',
-        size: 'large',
-        text: 'continue_with',
-        shape: 'pill',
-        logo_alignment: 'left',
-        width: 280,
-      });
-    };
-
-    const scriptId = 'google-gsi-script';
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement('script');
-      script.src = 'https://accounts.google.com/gsi/client';
-      script.async = true;
-      script.id = scriptId;
-      script.onload = initGoogleSignIn;
-      script.onerror = () => console.error('Failed to load Google Sign-In script');
-      document.body.appendChild(script);
-    } else {
-      initGoogleSignIn();
-    }
-  }, []);
-
-  const handleCredentialResponse = async (response: { credential: string }) => {
+  const handleCredentialResponse = useCallback(async (response: { credential: string }) => {
     try {
       const decoded = jwtDecode<{ email: string; name: string; picture: string }>(response.credential);
       console.log('Decoded Google token:', decoded);
@@ -129,7 +110,48 @@ export default function GoogleLoginButton({ onUserNotFound }: Props) {
     } catch (err) {
       console.error('Error processing Google sign-in:', err);
     }
-  };
+  }, [supabase, onUserNotFound]);
+
+  useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID) {
+      console.error('Google Client ID is not set');
+      return;
+    }
+
+    const initGoogleSignIn = async () => {
+      const [generatedNonce, hashedNonce] = await generateNonce();
+      nonceRef.current = generatedNonce;
+
+      google.accounts.id.initialize({
+        client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
+        callback: handleCredentialResponse,
+        nonce: hashedNonce,
+        use_fedcm_for_prompt: true,
+      });
+
+      google.accounts.id.renderButton(document.getElementById('google-button'), {
+        theme: 'outline',
+        size: 'large',
+        text: 'continue_with',
+        shape: 'pill',
+        logo_alignment: 'left',
+        width: 280,
+      });
+    };
+
+    const scriptId = 'google-gsi-script';
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement('script');
+      script.src = 'https://accounts.google.com/gsi/client';
+      script.async = true;
+      script.id = scriptId;
+      script.onload = initGoogleSignIn;
+      script.onerror = () => console.error('Failed to load Google Sign-In script');
+      document.body.appendChild(script);
+    } else {
+      initGoogleSignIn();
+    }
+  }, [handleCredentialResponse]);
 
   return <div id="google-button" />;
 }

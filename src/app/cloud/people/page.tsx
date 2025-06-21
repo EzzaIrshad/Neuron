@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import Link from 'next/link';
 // import { useRouter } from 'next/navigation';
 import React from 'react'
@@ -73,7 +74,7 @@ export default function Page() {
                         <Link href={`/cloud/people/${person.id}`} key={person.id}>
                             <article className="flex flex-col gap-[3vh] p-4 bg-white rounded-lg 2xl:w-58 w-43 shadow-[0px_0px_4px_rgba(0,0,0,0.15)]">
                                 <header className="flex justify-between items-start w-full text-[10px] font-medium tracking-wide">
-                                    <img src={person.avatar} alt="People" className="size-[clamp(3vw,40px,5vw)] rounded-full object-contain aspect-square" />
+                                    <Image src={person.avatar} alt="People" className="size-[clamp(3vw,40px,5vw)] rounded-full object-contain aspect-square" />
                                     <p>{person.fileCount} Files</p>
                                 </header>
 

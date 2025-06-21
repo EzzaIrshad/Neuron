@@ -4,7 +4,7 @@ import { CardLineChart } from './LineChart';
 import { AnalyticsPieChart } from './PieChart';
 import { AnalyticsBarChart } from './BarChart';
 
-const Analytics = async () => {
+const Analytics = () => {
     const card = [
         {
             title: "Weekly sales",

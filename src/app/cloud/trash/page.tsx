@@ -63,7 +63,7 @@ const Trash = () => {
 //     }))
 // , [files]);
 
-
+console.log(editFileId, editName);
 
  const columns: ColumnDef<CloudModel>[] = [
     {
@@ -102,34 +102,39 @@ const Trash = () => {
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
           {row.original.is_folder ? (
-            <img
+            <Image
               src="/images/icons/folder-icon.png"
               alt="Folder"
-              className="size-4"
+              width={16}
+              height={16}
             />
           ) : row.original.type === "image" ? (
-            <img
+            <Image
               src="/images/icons/image-icon.png"
               alt="Image"
-              className="size-4"
+              width={16}
+              height={16}
             />
           ) : row.original.type === "video" ? (
-            <img
+            <Image
               src="/images/icons/video-icon.png"
               alt="Video"
-              className="size-4"
+              width={16}
+              height={16}
             />
           ) : row.original.type === "audio" ? (
-            <img
+            <Image
               src="/images/icons/audio-icon.png"
               alt="Audio"
-              className="size-4"
+              width={16}
+              height={16}
             />
           ) : row.original.file_extension === "pdf" ? (
-            <img
+            <Image
               src="/images/icons/file-icon.png"
               alt="PDF"
-              className="size-4"
+              width={16}
+              height={16}
             />
           ) : (
             "📄"
@@ -209,8 +214,8 @@ const Trash = () => {
                       files: state.files.filter((f) => f.id !== file.id),
                     }));
                     toast.success(`${file.name} moved to trash`);
-                  } catch (error: any) {
-                    toast.error(`Failed to delete ${file.name}: ${error.message}`);
+                  } catch (error: unknown) {
+                    toast.error(`Failed to delete ${file.name}: ${error instanceof Error ? error.message : 'Unknown error'}`);
                   }
                 }}
               >

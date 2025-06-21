@@ -50,22 +50,34 @@ function detectFileType(file: File): FileType {
     return FileType.UNKNOWN;
 }
 
-async function grapheneBrainSignalsConverter(file: File, fileType: FileType): Promise<any> {
+type SimulatedGrapheneSignals = {
+    type: "neural_spikes";
+    data: Uint8ClampedArray | Float32Array | Uint8Array;
+    snr: number;
+};
+
+async function grapheneBrainSignalsConverter(file: File, fileType: FileType): Promise<{
+    originalFile: string;
+    fileType: FileType;
+    binarySample: string;
+    grapheneEncodedSample: string[];
+    grapheneEncodingMethod: string;
+    conversionTime: string;
+}> {
     try {
-        let grapheneBrainSignals: any;
 
         switch (fileType) {
             case FileType.IMAGE:
-                grapheneBrainSignals = await processImageForGraphene(file);
+                await processImageForGraphene(file);
                 break;
             case FileType.VIDEO:
-                grapheneBrainSignals = await processVideoForGraphene(file);
+                await processVideoForGraphene(file);
                 break;
             case FileType.AUDIO:
-                grapheneBrainSignals = await processAudioForGraphene(file);
+                await processAudioForGraphene(file);
                 break;
             case FileType.PDF:
-                grapheneBrainSignals = await processPDFForGraphene(file);
+                await processPDFForGraphene(file);
                 break;
             default:
                 throw new Error('Unsupported file type');
@@ -91,12 +103,13 @@ async function grapheneBrainSignalsConverter(file: File, fileType: FileType): Pr
         };
     } catch (error) {
         console.error("Error during graphene brain signals conversion:", error);
+        throw error;
     }
 
 }
 
 // Placeholder functions for graphene-based processing (implement your logic here)
-async function processImageForGraphene(file: File): Promise<any> {
+async function processImageForGraphene(file: File): Promise<SimulatedGrapheneSignals> {
     // Example: Simulate graphene microelectrode recording of visual stimuli response
     return new Promise((resolve) => {
         const reader = new FileReader();
@@ -110,7 +123,7 @@ async function processImageForGraphene(file: File): Promise<any> {
                 ctx.drawImage(img, 0, 0);
                 const imageData = ctx.getImageData(0, 0, img.width, img.height);
                 // Simulate graphene sensor array capturing neural spikes
-                const simulatedSignals = {
+                const simulatedSignals: SimulatedGrapheneSignals = {
                     type: "neural_spikes",
                     data: imageData.data, // Placeholder for neural spike data
                     snr: 6, // High SNR as per graphene electrode research[](https://www.nature.com/articles/s41467-025-58156-z)[](https://pmc.ncbi.nlm.nih.gov/articles/PMC11937542/)
@@ -123,7 +136,7 @@ async function processImageForGraphene(file: File): Promise<any> {
     });
 }
 
-async function processVideoForGraphene(file: File): Promise<any> {
+async function processVideoForGraphene(file: File): Promise<SimulatedGrapheneSignals> {
     // Example: Simulate graphene microelectrode recording of visual stimuli response
     return new Promise((resolve) => {
         const reader = new FileReader();
@@ -137,7 +150,7 @@ async function processVideoForGraphene(file: File): Promise<any> {
                 ctx.drawImage(video, 0, 0);
                 const imageData = ctx.getImageData(0, 0, video.videoWidth, video.videoHeight);
                 // Simulate graphene sensor array capturing neural spikes
-                const simulatedSignals = {
+                const simulatedSignals: SimulatedGrapheneSignals = {
                     type: "neural_spikes",
                     data: imageData.data, // Placeholder for neural spike data
                     snr: 6, // High SNR as per graphene electrode research[](https://www.nature.com/articles/s41467-025-58156-z)[](https://pmc.ncbi.nlm.nih.gov/articles/PMC11937542/)
@@ -150,15 +163,15 @@ async function processVideoForGraphene(file: File): Promise<any> {
     });
 }
 
-async function processAudioForGraphene(file: File): Promise<any> {
+async function processAudioForGraphene(file: File): Promise<SimulatedGrapheneSignals> {
     // Example: Simulate graphene microelectrode recording of auditory stimuli response
     return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = () => {
-            const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+            const audioContext = new (window.AudioContext || window.webkitAudioContext!)();
             audioContext.decodeAudioData(reader.result as ArrayBuffer, (buffer) => {
                 // Simulate graphene sensor array capturing neural spikes
-                const simulatedSignals = {
+                const simulatedSignals: SimulatedGrapheneSignals = {
                     type: "neural_spikes",
                     data: buffer.getChannelData(0), // Placeholder for neural spike data
                     snr: 6, // High SNR as per graphene electrode research[](https://www.nature.com/articles/s41467-025-58156-z)[](https://pmc.ncbi.nlm.nih.gov/articles/PMC11937542/)
@@ -170,14 +183,14 @@ async function processAudioForGraphene(file: File): Promise<any> {
     });
 }
 
-async function processPDFForGraphene(file: File): Promise<any> {
+async function processPDFForGraphene(file: File): Promise<SimulatedGrapheneSignals> {
     // Example: Simulate graphene microelectrode recording of visual stimuli response
     return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = () => {
             const pdfData = new Uint8Array(reader.result as ArrayBuffer);
             // Simulate graphene sensor array capturing neural spikes
-            const simulatedSignals = {
+            const simulatedSignals: SimulatedGrapheneSignals = {
                 type: "neural_spikes",
                 data: pdfData, // Placeholder for neural spike data
                 snr: 6, // High SNR as per graphene electrode research[](https://www.nature.com/articles/s41467-025-58156-z)[](https://pmc.ncbi.nlm.nih.gov/articles/PMC11937542/)

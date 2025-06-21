@@ -2,11 +2,12 @@
 import { LogoSvg } from "@/components/logo_svg";
 import ProfileCard from "@/components/profileCard";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { usePathname } from "next/navigation";
+import Image from "next/image";
+// import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const Header = () => {
-  const currentPath = usePathname();
+  // const currentPath = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [hasNotification, setHasNotification] = useState(true);
 
@@ -88,9 +89,11 @@ const Header = () => {
                     {user ? (
                         <button onClick={handleProfileClick} className="flex items-center gap-2">
                             <p className="text-sm font-medium">{user.full_name}</p>
-                            <img
+                            <Image
                                 src={user.avatar_url || "/images/user.png"}
                                 alt="profile picture"
+                                width={36}
+                                height={36}
                                 className="object-contain shrink-0 w-9 aspect-square rounded-full"
                             />
                         </button>

@@ -102,11 +102,10 @@ const SidebarLink = ({
   return (
     <Link
       href={item.href}
-      className={`flex items-center h-[6vh] gap-4 text-sm font-medium transition ${
-        isActive
+      className={`flex items-center h-[6vh] gap-4 text-sm font-medium transition ${isActive
           ? "pl-5 border-l-4 border-blue-600 bg-[#f5f9fc] text-blue-600"
           : "pl-6 text-gray-700 hover:bg-[#f0f5fc]"
-      }`}
+        }`}
     >
       {item.icon}
       {item.name}
@@ -152,10 +151,10 @@ interface UploadFile {
   error?: string;
 }
 
-const UploadModal: React.FC<{ 
-  uploads: UploadFile[]; 
-  onClose: () => void; 
-  isOpen: boolean 
+const UploadModal: React.FC<{
+  uploads: UploadFile[];
+  onClose: () => void;
+  isOpen: boolean
 }> = ({ uploads, onClose, isOpen }) => {
   const allCompleted = uploads.every(u => u.status === 'success' || u.status === 'failed');
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
@@ -201,9 +200,9 @@ const UploadModal: React.FC<{
             <path d="M14 2v4a2 2 0 0 0 2 2h4" />
           </svg>
         )}
-        
+
         {status === 'success' && (
-          <motion.div 
+          <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', stiffness: 500, damping: 20 }}
@@ -216,7 +215,7 @@ const UploadModal: React.FC<{
         )}
       </div>
     );
-    
+
     return baseIcon;
   };
 
@@ -244,7 +243,7 @@ const UploadModal: React.FC<{
               </motion.div>
               <span>File Uploads</span>
               {uploads.some(u => u.status === 'uploading') && (
-                <motion.span 
+                <motion.span
                   className="text-xs text-blue-600"
                   animate={{ opacity: [0.6, 1, 0.6] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
@@ -253,10 +252,10 @@ const UploadModal: React.FC<{
                 </motion.span>
               )}
             </div>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={onClose} 
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onClose}
               disabled={!allCompleted && uploads.length > 0}
               className="rounded-full"
             >
@@ -266,7 +265,7 @@ const UploadModal: React.FC<{
         </DialogHeader>
 
         {uploads.length === 0 ? (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="py-8 text-center text-gray-500 flex flex-col items-center"
@@ -286,20 +285,17 @@ const UploadModal: React.FC<{
                 whileHover={{ scale: 1.01 }}
                 onHoverStart={() => setHoveredItem(upload.id)}
                 onHoverEnd={() => setHoveredItem(null)}
-                className={`relative p-3 border rounded-lg transition-all ${
-                  upload.status === 'success' ? 'bg-green-50 border-green-100' :
-                  upload.status === 'failed' ? 'bg-red-50 border-red-100' :
-                  'bg-white border-gray-200'
-                } ${
-                  hoveredItem === upload.id ? 'shadow-md' : 'shadow-sm'
-                }`}
+                className={`relative p-3 border rounded-lg transition-all ${upload.status === 'success' ? 'bg-green-50 border-green-100' :
+                    upload.status === 'failed' ? 'bg-red-50 border-red-100' :
+                      'bg-white border-gray-200'
+                  } ${hoveredItem === upload.id ? 'shadow-md' : 'shadow-sm'
+                  }`}
               >
                 <div className="flex items-start gap-3">
-                  <div className={`flex-shrink-0 p-2 rounded-full transition-colors ${
-                    upload.status === 'success' ? 'bg-green-100 text-green-600' :
-                    upload.status === 'failed' ? 'bg-red-100 text-red-600' :
-                    'bg-blue-100 text-blue-600'
-                  }`}>
+                  <div className={`flex-shrink-0 p-2 rounded-full transition-colors ${upload.status === 'success' ? 'bg-green-100 text-green-600' :
+                      upload.status === 'failed' ? 'bg-red-100 text-red-600' :
+                        'bg-blue-100 text-blue-600'
+                    }`}>
                     {getFileIcon(upload.type, upload.status)}
                   </div>
                   <div className="flex-grow min-w-0">
@@ -307,26 +303,24 @@ const UploadModal: React.FC<{
                       <p className="text-sm font-medium truncate">
                         {upload.name}
                       </p>
-                      <span className={`text-xs font-semibold whitespace-nowrap ${
-                        upload.status === 'success' ? 'text-green-600' :
-                        upload.status === 'failed' ? 'text-red-600' :
-                        'text-blue-600'
-                      }`}>
+                      <span className={`text-xs font-semibold whitespace-nowrap ${upload.status === 'success' ? 'text-green-600' :
+                          upload.status === 'failed' ? 'text-red-600' :
+                            'text-blue-600'
+                        }`}>
                         {upload.status === 'failed' ? 'Failed' : `${Math.floor(upload.progress)}%`}
                       </span>
                     </div>
-                    
+
                     <div className="w-full bg-gray-200 rounded-full h-2 mt-2 relative overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${upload.progress}%` }}
                         transition={{ duration: 0.5 }}
-                        className={`h-full rounded-full absolute top-0 left-0 ${
-                          upload.status === 'success' ? 'bg-green-500' :
-                          upload.status === 'failed' ? 'bg-red-500' :
-                          upload.status === 'finalizing' ? 'bg-blue-400' :
-                          'bg-blue-600'
-                        }`}
+                        className={`h-full rounded-full absolute top-0 left-0 ${upload.status === 'success' ? 'bg-green-500' :
+                            upload.status === 'failed' ? 'bg-red-500' :
+                              upload.status === 'finalizing' ? 'bg-blue-400' :
+                                'bg-blue-600'
+                          }`}
                       />
                       {upload.status === 'uploading' && (
                         <motion.div
@@ -341,7 +335,7 @@ const UploadModal: React.FC<{
                         />
                       )}
                     </div>
-                    
+
                     <div className="flex justify-between text-xs text-gray-500 mt-1">
                       <span>{upload.message}</span>
                       {upload.status !== 'preparing' && upload.fakeSizeMB > 0 && (
@@ -350,9 +344,9 @@ const UploadModal: React.FC<{
                         </span>
                       )}
                     </div>
-                    
+
                     {upload.error && (
-                      <motion.p 
+                      <motion.p
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         className="text-red-500 text-xs mt-1"
@@ -362,9 +356,9 @@ const UploadModal: React.FC<{
                     )}
                   </div>
                 </div>
-                
+
                 {upload.status === 'success' && hoveredItem === upload.id && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     className="absolute inset-0 pointer-events-none overflow-hidden"
@@ -395,10 +389,10 @@ const UploadModal: React.FC<{
             ))}
           </div>
         )}
-        
+
         <DialogFooter>
-          <Button 
-            onClick={onClose} 
+          <Button
+            onClick={onClose}
             disabled={!allCompleted}
             className="relative overflow-hidden"
           >
@@ -412,7 +406,7 @@ const UploadModal: React.FC<{
             ) : (
               'Cancel'
             )}
-            
+
             {!allCompleted && uploads.length > 0 && (
               <motion.div
                 className="absolute inset-0 bg-blue-600 opacity-10"
@@ -459,8 +453,12 @@ export function CreateMenu({ parentId }: { parentId?: string }) {
       toast.success(`Folder created: ${folderName}`, { id: toastId });
       setFolderName("");
       setOpen(false);
-    } catch (error: any) {
-      toast.error(`Failed to create folder: ${error.message || "Unknown error"}`, {
+    } catch (error: unknown) {
+      let message = "Unknown error";
+      if (error && typeof error === "object" && "message" in error) {
+        message = String((error as { message?: string }).message);
+      }
+      toast.error(`Failed to create folder: ${message}`, {
         id: toastId,
       });
     }
@@ -530,7 +528,7 @@ export function CreateMenu({ parentId }: { parentId?: string }) {
       }, 500 + Math.random() * 500);
 
       try {
-        await uploadFile(file, parentId, (realProgress: number) => {
+        await uploadFile(file, parentId, () => {
           // Real progress handling would go here
         });
 
@@ -557,13 +555,13 @@ export function CreateMenu({ parentId }: { parentId?: string }) {
           uploadedAmountMB: fakeSizeMB,
           error: undefined,
         });
-      } catch (error: any) {
+      } catch (error: unknown) {
         clearInterval(progressInterval);
         updateUploadStatus(fileId, {
           status: 'failed',
           message: 'Upload Failed!',
           progress: 0,
-          error: error.message || "Unknown error",
+          error: (error as { message?: string }).message || "Unknown error",
         });
       }
     }

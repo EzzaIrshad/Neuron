@@ -389,7 +389,11 @@ const ConversionModal = ({
   };
 
   const handleCancelClick = () => {
-    onCancel?.() ?? onClose?.();
+    if (onCancel) {
+      onCancel();
+    } else if (onClose) {
+      onClose();
+    }
   };
 
   const handleVideoError = () => {
@@ -560,9 +564,8 @@ const ConversionModal = ({
                         backgroundColor: internalProgress >= point ? progressColor() : 'rgba(55, 65, 81, 0.5)',
                       }}
                       transition={{ type: 'spring', stiffness: 500 }}
-                      className={`w-6 h-6 rounded-full border-2 border-gray-600 flex items-center justify-center ${
-                        internalProgress >= point ? 'shadow-md' : ''
-                      }`}
+                      className={`w-6 h-6 rounded-full border-2 border-gray-600 flex items-center justify-center ${internalProgress >= point ? 'shadow-md' : ''
+                        }`}
                     >
                       {internalProgress >= point && (
                         <motion.div
@@ -649,8 +652,8 @@ const ConversionModal = ({
                 className="w-full max-w-xs max-h-48 md:max-h-64 flex items-center justify-center"
               >
                 <div className="flex flex-col items-center space-y-2">
-                    <Check size={48} className="text-emerald-400" />
-                    <p className="text-emerald-300 text-lg font-medium">Process Completed</p>
+                  <Check size={48} className="text-emerald-400" />
+                  <p className="text-emerald-300 text-lg font-medium">Process Completed</p>
                 </div>
               </motion.div>
 
@@ -664,10 +667,10 @@ const ConversionModal = ({
                   {conversionType === 'dna'
                     ? 'DNA Secured in Synthis'
                     : conversionType === 'graphene'
-                    ? 'Graphene Matrix Stored'
-                    : conversionType === 'brain'
-                    ? 'Neural Map Archived'
-                    : 'Conversion Complete!'}
+                      ? 'Graphene Matrix Stored'
+                      : conversionType === 'brain'
+                        ? 'Neural Map Archived'
+                        : 'Conversion Complete!'}
                 </h2>
                 <p className="text-gray-300 text-sm sm:text-base">
                   Your {conversionType || 'data'} is now securely stored in the Synthis Network.

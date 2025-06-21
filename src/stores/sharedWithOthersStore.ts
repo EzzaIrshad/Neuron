@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { createClient } from '@/lib/supabase/client';
 import { CloudModel } from '@/types/CloudModel';
+import { RealtimeChannel } from '@supabase/supabase-js';
 
 interface SharedWithOthersStore {
   sharedFiles: CloudModel[];
@@ -14,7 +15,7 @@ interface SharedWithOthersStore {
 }
 
 const supabase = createClient();
-let channel: any = null;
+let channel: RealtimeChannel | null = null;
 
 export const useSharedWithOthersStore = create<SharedWithOthersStore>((set, get) => ({
   sharedFiles: [],

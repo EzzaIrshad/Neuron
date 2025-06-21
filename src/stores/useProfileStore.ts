@@ -60,11 +60,18 @@ export const useProfileStore = create<ProfileStore>((set) => {
       return;
     }
 
-    // 🧹 Ensure role is not an array
-    const formattedUsers = (data as any[]).map((user) => ({
-      ...user,
-      role: Array.isArray(user.role) ? user.role[0] : user.role,
-    }));
+    type SupabaseUser = Omit<UserModel, 'role'> & {
+      role: { role_name: string } | { role_name: string }[];
+    };
+
+    // 🧹 Ensure role is not an array and cast role_name to ValidRole
+    const formattedUsers = (data as SupabaseUser[]).map((user) => {
+      const roleObj = Array.isArray(user.role) ? user.role[0] : user.role;
+      return {
+        ...user,
+        role: roleObj.role_name as unknown as UserModel['role'],
+      };
+    });
 
     set({ users: formattedUsers, loading: false });
   };

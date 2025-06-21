@@ -6,6 +6,7 @@ import React, {
   createContext,
   useContext,
   JSX,
+  useCallback,
 } from "react";
 import {
   IconArrowNarrowLeft,
@@ -14,7 +15,7 @@ import {
 } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "motion/react";
-import { ImageProps } from "next/image";
+import Image, { ImageProps } from "next/image";
 import { useOutsideClick } from "@/hooks/use-outside-click";
 
 interface CarouselProps {
@@ -33,7 +34,7 @@ export const CarouselContext = createContext<{
   onCardClose: (index: number) => void;
   currentIndex: number;
 }>({
-  onCardClose: () => {},
+  onCardClose: () => { },
   currentIndex: 0,
 });
 
@@ -167,6 +168,11 @@ export const Card = ({
   const containerRef = useRef<HTMLDivElement>(null!);
   const { onCardClose } = useContext(CarouselContext);
 
+  const handleClose = useCallback(() => {
+    setOpen(false);
+    onCardClose(index);
+  }, [index, onCardClose]);
+
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
@@ -182,17 +188,12 @@ export const Card = ({
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open]);
+  }, [open, handleClose]);
 
   useOutsideClick(containerRef, () => handleClose());
 
   const handleOpen = () => {
     setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    onCardClose(index);
   };
 
   return (
@@ -235,9 +236,11 @@ export const Card = ({
                 alt={card.id}
                 className="border-2 border-black size-auto max-w-[90vw] max-h-[80vh] object-fit"
               /> */}
-              <img
+              <Image
                 src={card.src}
                 alt={card.id}
+                width={800}
+                height={600}
                 className="size-auto max-w-[90vw] max-h-[80vh] block rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.2)]"
               />
             </motion.div>
@@ -275,8 +278,8 @@ export const Card = ({
 };
 
 export const BlurImage = ({
-  height,
-  width,
+  height = 400,
+  width = 600,
   src,
   className,
   alt,
@@ -284,18 +287,17 @@ export const BlurImage = ({
 }: ImageProps) => {
   const [isLoading, setLoading] = useState(true);
   return (
-    <img
+    <Image
       className={cn(
         "h-full w-full transition duration-300",
         isLoading ? "blur-sm" : "blur-0",
         className,
       )}
       onLoad={() => setLoading(false)}
-      src={src as string}
+      src={src}
       width={width}
       height={height}
       loading="lazy"
-      decoding="async"
       alt={alt ? alt : "Background of a beautiful view"}
       {...rest}
     />

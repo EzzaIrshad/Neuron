@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { ChevronIcon } from "./icons";
+import Image from "next/image";
 
 interface RecentFilesProps {
     id: string;
@@ -137,8 +138,11 @@ const RecentFiles = ({ id }: RecentFilesProps) => {
                             <div className="flex gap-4 justify-between items-center w-full ">
                                 <div className="flex flex-1 gap-6 items-center">
                                     <div className="max-2xl:size-5 size-6">
-
-                                        <img src={item.src} alt="" className="w-full h-full object-cover" />
+                                        <Image
+                                            src={item.src}
+                                            alt=""
+                                            className="w-full h-full object-cover"
+                                        />
 
                                     </div>
                                     <div className="flex gap-3 items-center">
@@ -162,9 +166,9 @@ const RecentFiles = ({ id }: RecentFilesProps) => {
                                 {
                                     id === "memory" && (
                                         <div className="flex flex-1 items-center">
-                                            <img src="/images/p1.png" alt="People" className="size-8 rounded-full" />
-                                            <img src="/images/p2.png" alt="People" className="size-8 rounded-full -ml-1.5" />
-                                            <img src="/images/p3.png" alt="People" className="size-8 rounded-full -ml-1.5" />
+                                            <Image src="/images/p1.png" alt="People" className="size-8 rounded-full" />
+                                            <Image src="/images/p2.png" alt="People" className="size-8 rounded-full -ml-1.5" />
+                                            <Image src="/images/p3.png" alt="People" className="size-8 rounded-full -ml-1.5" />
                                             <div className="size-8 rounded-full -ml-1.5 bg-[#e1e1e1] flex items-center justify-center text-xs text-[#484848] font-semibold">+2</div>
                                         </div>
                                     )

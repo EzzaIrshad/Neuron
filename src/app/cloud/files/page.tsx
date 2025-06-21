@@ -44,6 +44,7 @@ import {
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useCloudStore } from "@/stores/useCloudStore";
 import { CloudModel } from "@/types/CloudModel";
+import Image from "next/image";
 
 export default function Files() {
   const router = useRouter();
@@ -103,40 +104,45 @@ export default function Files() {
       },
       cell: ({ row }) => (
         <div className="max-w-[40vw] flex items-center gap-2 overflow-hidden">
-          <span className="truncate inline-block max-w-full">
             {row.original.is_folder ? (
-              <img
+              <Image
                 src="/images/icons/folder-icon.png"
                 alt="Folder"
-                className="size-4 inline-block mr-2"
+                width={16}
+                height={16}
               />
             ) : row.original.file_extension === "pdf" ? (
-              <img
+              <Image
                 src="/images/icons/file-icon.png"
                 alt="PDF"
-                className="size-4 inline-block mr-3"
+                width={16}
+                height={16}
               />
             ) : row.original.type === "image" ? (
-              <img
+              <Image
                 src="/images/icons/image-icon.png"
                 alt="Image"
-                className="size-4 inline-block mr-3"
+                width={16}
+                height={16}
               />
             ) : row.original.type === "video" ? (
-              <img
+              <Image
                 src="/images/icons/video-icon.png"
                 alt="Video"
-                className="size-4 inline-block mr-3"
+                width={16}
+                height={16}
               />
             ) : row.original.type === "audio" ? (
-              <img
+              <Image
                 src="/images/icons/audio-icon.png"
                 alt="Audio"
-                className="size-4 inline-block mr-3"
+                width={16}
+                height={16}
               />
             ) : (
               "📄"
             )}
+          <span className="truncate max-w-full">
             {row.getValue("name")}
           </span>
         </div>
@@ -219,8 +225,8 @@ export default function Files() {
                       files: state.files.filter((f) => f.id !== file.id),
                     }));
                     toast.success(`${file.name} moved to trash`);
-                  } catch (error: any) {
-                    toast.error(`Failed to delete ${file.name}: ${error.message}`);
+                  } catch (error: unknown) {
+                    toast.error(`Failed to delete ${file.name}: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
                   }
                 }}
               >
@@ -272,8 +278,8 @@ export default function Files() {
       setEditFileId(null);
       setEditName("");
       setDialogOpen(false);
-    } catch (error: any) {
-      toast.error(`Failed to rename: ${error.message}`);
+    } catch (error: unknown) {
+      toast.error(`Failed to rename: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
     }
   };
 
@@ -347,7 +353,7 @@ export default function Files() {
             </DialogTitle>
           </DialogHeader>
           <DialogContent className="w-full h-auto p-0 overflow-hidden" >
-            <img src={previewImageSrc} alt="Preview" className="w-[1920px] h-auto" />
+            <Image src={previewImageSrc} alt="Preview" width={1920} height={1080} className="h-auto" />
           </DialogContent>
         </Dialog>
       )}

@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { v4 as uuidv4 } from 'uuid';
 import { createClient } from '@/lib/supabase/client';
 import { CloudModel } from '@/types/CloudModel';
+import { RealtimeChannel } from '@supabase/supabase-js';
 
 interface CloudStore {
   files: CloudModel[];
@@ -22,7 +23,7 @@ interface CloudStore {
 const supabase = createClient();
 
 export const useCloudStore = create<CloudStore>((set, get) => {
-  let channel: any = null;
+  let channel: RealtimeChannel | null = null;
 
   return {
     files: [],

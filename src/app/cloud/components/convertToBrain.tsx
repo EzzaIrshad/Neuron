@@ -1,5 +1,11 @@
 'use client';
 
+declare global {
+  interface Window {
+    webkitAudioContext?: typeof AudioContext;
+  }
+}
+
 export default async function convertToBrainSignals(src: string, onComplete: () => void) {
 
   try {
@@ -54,8 +60,14 @@ function detectFileType(file: File): FileType {
   return FileType.UNKNOWN;
 }
 
+// Add these types above your functions
+type ImageResult = { originalFile: File; signalData: ImageData | undefined };
+type VideoResult = ImageData | undefined;
+type AudioResult = AudioBuffer;
+type PDFResult = Uint8Array;
+
 async function brainSignalsConverter(file: File, fileType: FileType): Promise<string> {
-  let result: any;
+  let result: ImageResult | VideoResult | AudioResult | PDFResult;
 
   switch (fileType) {
     case FileType.IMAGE:
@@ -73,7 +85,7 @@ async function brainSignalsConverter(file: File, fileType: FileType): Promise<st
     default:
       throw new Error('Unsupported file type');
   }
-  
+
   await new Promise(resolve => setTimeout(resolve, 5000));
 
   const brainSignalResult = {
@@ -98,30 +110,30 @@ async function brainSignalsConverter(file: File, fileType: FileType): Promise<st
 
 }
 
-async function processImage(file: File): Promise<any> {
+async function processImage(file: File): Promise<ImageResult> {
   return new Promise((resolve) => {
     const reader = new FileReader();
     reader.onload = async () => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          canvas.width = img.width;
-          canvas.height = img.height;
-          const ctx = canvas.getContext('2d');
-          ctx?.drawImage(img, 0, 0);
-          const imageData = ctx?.getImageData(0, 0, img.width, img.height);
-          resolve({
-            originalFile: file,
-            signalData: imageData,
-          });
-        }
-        img.src = reader.result as string;
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0);
+        const imageData = ctx?.getImageData(0, 0, img.width, img.height);
+        resolve({
+          originalFile: file,
+          signalData: imageData,
+        });
+      }
+      img.src = reader.result as string;
     }
     reader.readAsDataURL(file);
   });
 }
 
-async function processVideo(file: File): Promise<any> {
+async function processVideo(file: File): Promise<VideoResult> {
   return new Promise((resolve) => {
     const video = document.createElement('video');
     video.preload = 'metadata';
@@ -141,11 +153,11 @@ async function processVideo(file: File): Promise<any> {
   });
 }
 
-async function processAudio(file: File): Promise<any> {
+async function processAudio(file: File): Promise<AudioResult> {
   return new Promise((resolve) => {
     const reader = new FileReader();
     reader.onload = () => {
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const audioContext = new (window.AudioContext || window.webkitAudioContext!)();
       audioContext.decodeAudioData(reader.result as ArrayBuffer, (buffer) => {
         resolve(buffer);
       });
@@ -154,7 +166,7 @@ async function processAudio(file: File): Promise<any> {
   });
 }
 
-async function processPDF(file: File): Promise<any> {
+async function processPDF(file: File): Promise<PDFResult> {
   return new Promise((resolve) => {
     const reader = new FileReader();
     reader.onload = () => {

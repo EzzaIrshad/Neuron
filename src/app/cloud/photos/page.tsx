@@ -212,17 +212,19 @@ const AlbumCard: React.FC<{
   useEffect(() => {
     if (isMobile || !cardRef.current) return;
 
+    const node = cardRef.current;
+
     const handleMove = (e: MouseEvent) => {
-      if (!cardRef.current) return;
-      const rect = cardRef.current.getBoundingClientRect();
+      if (!node) return;
+      const rect = node.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
       const rotateY = (x - centerX) / 20;
       const rotateX = (centerY - y) / 20;
-      
-      cardRef.current.style.transform = `
+
+      node.style.transform = `
         perspective(1000px)
         rotateX(${rotateX}deg)
         rotateY(${rotateY}deg)
@@ -231,19 +233,19 @@ const AlbumCard: React.FC<{
     };
 
     const handleLeave = () => {
-      if (cardRef.current) {
-        cardRef.current.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+      if (node) {
+        node.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
       }
     };
 
     if (isHovered) {
-      cardRef.current?.addEventListener('mousemove', handleMove);
-      cardRef.current?.addEventListener('mouseleave', handleLeave);
+      node?.addEventListener('mousemove', handleMove);
+      node?.addEventListener('mouseleave', handleLeave);
     }
 
     return () => {
-      cardRef.current?.removeEventListener('mousemove', handleMove);
-      cardRef.current?.removeEventListener('mouseleave', handleLeave);
+      node?.removeEventListener('mousemove', handleMove);
+      node?.removeEventListener('mouseleave', handleLeave);
     };
   }, [isHovered, isMobile]);
 
@@ -370,12 +372,12 @@ const PhotosPage = () => {
 
   const [showConversionModal, setShowConversionModal] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
-  const [selectedImageSrc, setSelectedImageSrc] = useState("");
+  // const [selectedImageSrc, setSelectedImageSrc] = useState("");
   const [animationSrc, setAnimationSrc] = useState("");
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [conversionType, setConversionType] = useState<"dna" | "graphene" | "brain" | null>(null);
-  const [conversionStatus, setConversionStatus] = useState<"idle" | "converting" | "completed">("idle");
+  // const [conversionStatus, setConversionStatus] = useState<"idle" | "converting" | "completed">("idle");
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [fileIdToShare, setFileIdToShare] = useState<string | null>(null);
   
@@ -481,17 +483,17 @@ const PhotosPage = () => {
 
     toast.info(`Starting ${conversionName}...`);
     setAnimationSrc(animationVideo);
-    setSelectedImageSrc(src);
+    // setSelectedImageSrc(src);
     setConversionType(type);
     setShowConversionModal(true);
     setShowAnimation(true);
     setProgress(0);
-    setConversionStatus("converting");
+    // setConversionStatus("converting");
 
     const conversionProcessStart = Date.now();
 
     const completeConversionProcess = () => {
-      setConversionStatus("completed");
+      // setConversionStatus("completed");
       const elapsedSinceProcessStart = Date.now() - conversionProcessStart;
       const remainingMinDisplayTime = Math.max(0, MIN_ANIMATION_DURATION - elapsedSinceProcessStart);
 
@@ -526,9 +528,9 @@ const PhotosPage = () => {
           },
         },
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Failed to delete photo:", error);
-      toast.error(`Failed to delete photo: ${error.message}`);
+      toast.error(`Failed to delete photo: ${error instanceof Error ? error.message : "Unknown error"}`);
     }
   }, [deleteFile]);
 
@@ -604,13 +606,13 @@ const fixedAlbums = useMemo((): Album[] => [
 
 
 
-  const categories: Category[] = [
+  const categories: Category[] = useMemo(() => [
     { name: "Selfies", icon: <Smile />, count: 12 },
     { name: "Videos", icon: <Video />, count: 8 },
     { name: "Receipts", icon: <FileText />, count: 5 },
     { name: "Documents", icon: <Grid />, count: 15 },
     { name: "Screenshots", icon: <Camera />, count: 23 },
-  ];
+  ], []);
 
   const TABS = [
     { value: "gallery", label: "Gallery" },
@@ -708,13 +710,14 @@ const handleLocationClick = (locationName: string) => {
   // In a real app, you would filter and display photos from this location
 };
 
-const handleMemoryClick = (memory: any) => {
+const handleMemoryClick = (memory: { title: string }) => {
   toast.info(`Showing ${memory.title} photos`);
   // In a real app, you would filter and display these photos
 };
 
 const handlePersonClick = (personId: string) => {
-  toast.info(`Showing photos of this person`);
+  console.log(`Showing photos of person with ID: ${personId}`);
+    toast.info(`Showing photos of this person`);
   // In a real app, you would filter and display photos with this person
 };
 
@@ -1203,7 +1206,7 @@ useEffect(() => {
               setShowConversionModal(false);
               setShowAnimation(false);
               setConversionType(null);
-              setConversionStatus("idle");
+              // setConversionStatus("idle");
             }}
             conversionType={conversionType}
           />
@@ -1219,8 +1222,8 @@ class ErrorBoundary extends Component<{ children: ReactNode, fallbackMessage?: s
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(_error: Error) {
-    return { hasError: true };
+  static getDerivedStateFromError(hasError: boolean) {
+    return { hasError };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {

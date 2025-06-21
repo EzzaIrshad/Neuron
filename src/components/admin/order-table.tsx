@@ -49,9 +49,6 @@ import { z } from "zod"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-  ChartConfig,
-} from "@/components/ui/chart"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
@@ -150,7 +147,7 @@ function DragHandle({ id }: { id: number }) {
 }
 
 // Custom Date Range Filter Function
-const dateRangeFilter: FilterFn<any> = (row, columnId, value) => {
+const dateRangeFilter: FilterFn<z.infer<typeof userSchema>> = (row, columnId, value) => {
   const date = new Date(row.getValue(columnId)).getTime()
   const start = value?.start ? new Date(value.start).getTime() : -Infinity
   const end = value?.end ? new Date(value.end).getTime() : Infinity
@@ -347,6 +344,16 @@ function isValidDate(date: Date | undefined) {
   return !isNaN(date.getTime())
 }
 
+ // Tab type constants to avoid magic strings
+const tabTypes = {
+  ALL: 'all',
+  INACTIVE: 'inactive',
+  PAID: 'paid',
+  PENDING: 'pending',
+  CANCEL: 'cancel',
+  FREE: 'free',
+}
+
 export function OrderTable({
   data: initialData,
 }: {
@@ -374,15 +381,7 @@ export function OrderTable({
     useSensor(KeyboardSensor, {})
   )
 
- // Tab type constants to avoid magic strings
-const tabTypes = {
-  ALL: 'all',
-  INACTIVE: 'inactive',
-  PAID: 'paid',
-  PENDING: 'pending',
-  CANCEL: 'cancel',
-  FREE: 'free',
-}
+
 
 // Count each category based on payment status or package type
 const tabCounts = React.useMemo(() => {
@@ -469,7 +468,7 @@ const globalFilterFn: FilterFn<z.infer<typeof userSchema>> = (row, columnId, fil
   const [endvalue, setEndValue] = React.useState(formatDate(enddate))
 
   // Custom Date Range Filter Function
-  const dateRangeFilter: FilterFn<any> = (row, columnId, value) => {
+  const dateRangeFilter: FilterFn<z.infer<typeof userSchema>> = (row, columnId, value) => {
     const date = new Date(row.getValue(columnId)).getTime()
     const start = value?.start ? new Date(value.start).getTime() : -Infinity
     const end = value?.end ? new Date(value.end).getTime() : Infinity

@@ -67,8 +67,12 @@ export default function ShareDialog({ fileId, open, onOpenChange }: ShareDialogP
       toast.success(`File shared with ${userIds.length} user(s)`);
       setEmailInput('');
       onOpenChange(false); // close dialog
-    } catch (err: any) {
-      toast.error(err.message || 'Error sharing file');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        toast.error(err.message || 'Error sharing file');
+      } else {
+        toast.error('Unknown error occurred');
+      }
     } finally {
       setLoading(false);
     }

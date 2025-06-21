@@ -5,6 +5,7 @@ import { LogoSvg } from "../../logo_svg";
 import ProfileCard from "../../profileCard";
 import RootSignIn from "../../signin/root-signin";
 import { useAuthStore } from "@/stores/useAuthStore";
+import Image from "next/image";
 
 const RootHeader = () => {
     const { user, signOut } = useAuthStore();
@@ -36,9 +37,11 @@ const RootHeader = () => {
                     {user ? (
                         <button onClick={handleProfileClick} className="flex items-center gap-2">
                             <p className="text-sm font-medium">{user.full_name}</p>
-                            <img
+                            <Image
                                 src={user.avatar_url || "/images/user.png"}
                                 alt="profile picture"
+                                width={36}
+                                height={36}
                                 className="object-contain shrink-0 w-9 aspect-square rounded-full"
                             />
                         </button>

@@ -7,14 +7,14 @@ import { useCloudStore } from "@/stores/useCloudStore";
 import  { createClient } from "@/lib/supabase/client";
 import { CloudModel } from "@/types/CloudModel";
 
+  const supabase = createClient();
+
 const Shared = () => {
   const { loading, fetchFiles } = useCloudStore();
   const [sharedFiles, setSharedFiles] = useState<{
     sharedWithMe: CloudModel[];
     sharedByMe: CloudModel[];
   }>({ sharedWithMe: [], sharedByMe: [] });
-
-  const supabase = createClient();
 
   useEffect(() => {
     const fetchSharedFiles = async () => {
