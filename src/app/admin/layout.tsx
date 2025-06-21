@@ -7,7 +7,7 @@ export default function AdminLayout({
   header
 }: Readonly<{
   children: React.ReactNode;
-  header?: React.ReactNode;
+  header: React.ReactNode;
 }>) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // const [activeTab, setActiveTab] = useState('dashboard');
