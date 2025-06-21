@@ -9,7 +9,7 @@ import RecentFiles from '../../components/recentFiles';
 
 
 export default async function ProfileDetail({ params }: { params: { id: string } }) {
-    const {id} = await params;
+    const {id} = params;
 
     const profiles = {
         '1': { name: "Alina Hania", avatar: "/images/p1.png" },
