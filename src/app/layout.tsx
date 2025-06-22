@@ -1,4 +1,4 @@
-import localFont from "next/font/local";
+
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Toaster } from "@/components/ui/sonner";
@@ -7,11 +7,11 @@ import "./globals.css";
 import { AuthProvider } from "@/lib/auth/AuthProvider";
 
 // Setup your custom font
-const segoeUI = localFont({
-  src: "./fonts/SegoeUI-VF.woff2",
-  display: "swap",
-  variable: "--font-segoe",
-});
+// const segoeUI = localFont({
+//   src: "./fonts/SegoeUI-VF.woff2",
+//   display: "swap",
+//   variable: "--font-segoe",
+// });
 
 // Metadata for your app
 export const metadata: Metadata = {
