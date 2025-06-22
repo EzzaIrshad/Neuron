@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
+import { Suspense } from "react";
 
 const segoeUI = localFont({
     src: '../fonts/SegoeUI-VF.ttf',
@@ -31,7 +32,10 @@ export default function CloudLayout({
 
             <div className="col-span-2 row-span-11 row-start-2 border-r border-r-[#b1c2e8]">
                 {/* Sidebar Slot */}
-                {sidebar}
+                
+                <Suspense fallback={<div>Loading sidebar...</div>}>
+                    {sidebar}
+                </Suspense>
             </div>
 
             <div className="col-span-10 row-span-11 col-start-3 row-start-2 overflow-y-auto">
