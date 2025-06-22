@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { createClient } from '@/lib/supabase/client';
 import { useAuthStore } from '@/stores/useAuthStore';
+import { UserModel } from '@/types/UserModel';
 // import { useRouter } from 'next/navigation';
 
 declare const google: {
@@ -81,32 +82,80 @@ export default function GoogleLoginButton({ onUserNotFound }: Props) {
       }
 
       const userId = userData.user.id;
-      const { data: profileData, error: fetchError } = await supabase
-        .from('profiles')
-        .select('full_name, email, avatar_url, role_id(role_name)')
-        .eq('id', userId)
-        .single();
 
-      if (fetchError || !profileData) {
-        console.error('Error fetching profile:', fetchError?.message);
-        return;
-      }
+const { data: profileData, error: fetchError } = await supabase
+  .from('profiles')
+  .select(`
+    full_name,
+    email,
+    avatar_url,
+    role_id(role_name),
+    is_active,
+    storage_limit_gb,
+    storage_used_gb,
+    current_package,
+    package_expiry_date,
+    plan_started_at,
+    payment_status,
+    is_email_verified,
+    last_login,
+    signup_source,
+    referral_code,
+    referred_by,
+    country,
+    phone_number,
+    organization,
+    website,
+    bio,
+    profile_completed,
+    preferred_language,
+    price,
+    order_number,
+    created_at
+  `)
+  .eq('id', userId)
+  .single();
 
-      const userModel = {
-        id: userId,
-        name: profileData.full_name || decoded.name || 'Unknown',
-        email: profileData.email || decoded.email || '',
-        avatar: profileData.avatar_url || decoded.picture || '',
-        role: profileData.role_id[0]?.role_name
-        
-      };
+if (fetchError || !profileData) {
+  console.error('Error fetching profile:', fetchError?.message);
+  return;
+}
 
-   
+// ✅ Final structured UserModel with safe fallbacks
+const userModel: UserModel = {
+  id: userId,
+  full_name: profileData.full_name ?? null,
+  email: profileData.email ?? '',
+  avatar_url: profileData.avatar_url ?? null,
+  role: {
+    role_name: profileData.role_id?.role_name ?? 'user', // 👈 fallback to 'user'
+  },
+  is_active: profileData.is_active ?? true,
+  storage_limit_gb: profileData.storage_limit_gb ?? 5,
+  storage_used_gb: profileData.storage_used_gb ?? 0,
+  current_package: profileData.current_package ?? 'free',
+  package_expiry_date: profileData.package_expiry_date ?? null,
+  plan_started_at: profileData.plan_started_at ?? null,
+  payment_status: profileData.payment_status ?? 'unpaid',
+  is_email_verified: profileData.is_email_verified ?? false,
+  last_login: profileData.last_login ?? null,
+  signup_source: profileData.signup_source ?? 'google',
+  referral_code: profileData.referral_code ?? null,
+  referred_by: profileData.referred_by ?? null,
+  country: profileData.country ?? null,
+  phone_number: profileData.phone_number ?? null,
+  organization: profileData.organization ?? null,
+  website: profileData.website ?? null,
+  bio: profileData.bio ?? null,
+  profile_completed: profileData.profile_completed ?? false,
+  preferred_language: profileData.preferred_language ?? 'en',
+  price: profileData.price ?? 0,
+  order_number: profileData.order_number ?? 0,
+  created_at: profileData.created_at ?? new Date().toISOString(),
+};
 
-     
-
-      useAuthStore.getState().setUser(userModel);
-      useAuthStore.getState().setLogoUrl(userModel.avatar || '');
+useAuthStore.getState().setUser(userModel);
+useAuthStore.getState().setLogoUrl(userModel.avatar_url || '');
     } catch (err) {
       console.error('Error processing Google sign-in:', err);
     }

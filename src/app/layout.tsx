@@ -36,7 +36,8 @@ export default function RootLayout({
           nonce={nonce}
         />
       </head>
-      <body className={`${segoeUI.variable} antialiased`}>
+      {/* className={`${segoeUI.variable} antialiased`} */}
+      <body >
         <Toaster />
         <AuthProvider>
           {children}
