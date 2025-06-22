@@ -128,7 +128,7 @@ const userModel: UserModel = {
   email: profileData.email ?? '',
   avatar_url: profileData.avatar_url ?? null,
   role: {
-    role_name: profileData.role_id?.role_name ?? 'user', // 👈 fallback to 'user'
+    role_name: profileData.role_id?.[0]?.role_name ?? 'user',
   },
   is_active: profileData.is_active ?? true,
   storage_limit_gb: profileData.storage_limit_gb ?? 5,
