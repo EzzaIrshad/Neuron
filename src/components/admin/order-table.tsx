@@ -354,7 +354,7 @@ const tabTypes = {
   FREE: 'free',
 }
 
-export function OrderTable({
+export default function OrderTable({
   data: initialData,
 }: {
   data: z.infer<typeof userSchema>[]

@@ -50,7 +50,7 @@ export function DataTable<TData extends { customer: string; order: string; statu
     const [rowSelection, setRowSelection] = useState({})
 
 
-    const globalFilterFn: FilterFn<TData> = (row, columnId, filterValue) => {
+    const globalFilterFn: FilterFn<TData> = (row, filterValue) => {
         const search = filterValue.toLowerCase()
 
         return (

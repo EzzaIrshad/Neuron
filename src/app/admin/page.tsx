@@ -17,7 +17,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import { OrderTable } from '@/components/admin/order-table';
+import OrderTable from '@/components/admin/order-table';
 import CircularProgress from '@/components/ui/circular-progress';
 import React from 'react';
 import { useProfileStore } from '@/stores/useProfileStore';
