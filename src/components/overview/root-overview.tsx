@@ -28,7 +28,7 @@ const RootOverview = () => {
         <div id="overview" className="w-full flex flex-col gap-8 mt-14">
             <div>
                 <h1 className="font-medium text-base/6">OVERVIEW</h1>
-                <h2 className="text-[40px] font-semibold mt-4">Securely save and share whats important</h2>
+                <h2 className="text-[clamp(1.8rem,5vw,2.5rem)] font-semibold mt-4">Securely save and share whats important</h2>
             </div>
             <div className="flex items-center gap-4 flex-wrap">
                 <div className="px-5 py-2 bg-[#121211] rounded-[56px] text-white font-medium">Backup and Protect</div>
@@ -37,8 +37,8 @@ const RootOverview = () => {
                 <div className="px-5 py-2 bg-[#e7e5e2] rounded-[56px] font-medium">AI in Neuron</div>
             </div>
 
-            <div className="flex justify-between max-lg:flex-col-reverse max-2xl:gap-25">
-                <div className="flex w-[394px] flex-col gap-12">
+            <div className="flex items-center justify-between max-lg:flex-col-reverse max-2xl:gap-25">
+                <div className="flex max-w-[394px] flex-col gap-12">
                     {
                         features.map((feature, index) => (
                             <div key={index} className="border-l-[2px] border-l-[#121211] pl-8 ">
@@ -65,7 +65,7 @@ const RootOverview = () => {
                     }
                 </div>
 
-                <div>
+                <div className="sm:p-10">
                     <video
                         width={930}
                         height={600}
@@ -75,7 +75,7 @@ const RootOverview = () => {
                         playsInline
                         style={{ display: 'block' }}
                     >
-                        <source src="/videos/overview_video.mp4" type="video/mp4" />
+                        <source src="/videos/cloud.mp4" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                     </div>

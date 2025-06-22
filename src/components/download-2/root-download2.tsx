@@ -7,7 +7,7 @@ const RootDownload2 = () => {
             <div className='container mx-auto'>
                 <div className='flex flex-col gap-14 items-center'>
                     <div className="flex flex-col gap-4 items-center">
-                        <h2 className="text-[40px] font-semibold text-center text-[#121211] max-sm:text-3xl">
+                        <h2 className="text-[clamp(1.8rem,5vw,2.5rem)] px-5 font-semibold text-center text-[#121211]">
                             Get the Neuron mobile app
                         </h2>
                         <p className="text-base tracking-wide text-center text-[#121211]">

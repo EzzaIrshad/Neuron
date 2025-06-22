@@ -58,7 +58,7 @@ const RootResources = () => {
                     {/* Title */}
                     <div className="max-lg:text-center">
                         <h1 className="text-[#74726f] font-medium text-base/6">RESOURCES</h1>
-                        <h2 className="text-[#121211] text-[40px]/13 font-semibold mt-4">Discover more about Neuron</h2>
+                        <h2 className="text-[#121211] text-[clamp(1.8rem,5vw,2.5rem)] font-semibold mt-4">Discover more about Neuron</h2>
                     </div>
 
                     {/* Cards */}

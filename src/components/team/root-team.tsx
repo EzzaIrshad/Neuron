@@ -23,22 +23,22 @@ const RootTeam = () => {
             <div className="container mx-auto px-4">
                 <div className="flex flex-col gap-16 max-sm:items-center">
                     <div>
-                        <h2 className="text-[#121211] text-[40px] font-semibold">Our Talented Team</h2>
+                        <h2 className="text-[#121211] text-[clamp(1.8rem,5vw,2.5rem)] font-semibold">Our Talented Team</h2>
                     </div>
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-20">
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-20 px-6">
                         {
                             teamMembers.map((member, index) => (
                                 <div key={index} className="flex items-center max-sm:flex-col max-sm:max-w-[385px] p-1 rounded-[28px] bg-white shadow-[0_4px_12px_2px_rgba(0,0,0,0.15)]">
                                     <div className="flex-1">
-                                    <Image src={member.image} alt="team_1" width={372} height={400} className="rounded-3xl" />
+                                    <Image src={member.image} alt="team_1" width={372} height={400} className="max-sm:h-[60vw] rounded-3xl object-cover object-top" />
                                     </div>
                                     <div className="flex flex-1 flex-col justify-between p-6 h-full">
                                         <div className="flex flex-col gap-3 text-[#74726f]">
                                             <span className=" text-xs ">{member.role}</span>
-                                            <h3 className="text-[#121211] text-[32px]/10 font-semibold mb-2 2xl:mb-8">{member.name}</h3>
-                                            <p>Final-year students combining skills and vision to create something meaningful and innovative.</p>
+                                            <h3 className="text-[#121211] text-[clamp(1.4rem,5vw,2rem)] font-semibold 2xl:mb-8">{member.name}</h3>
+                                            <p className="max-sm:text-sm">Final-year students combining skills and vision to create something meaningful and innovative.</p>
                                         </div>
-                                        <div className="flex justify-between max-sm:mt-10 sm:gap-8 items-center xl:max-2xl:mt-5 ">
+                                        <div className="flex justify-between max-sm:mt-7 sm:gap-8 items-center xl:max-2xl:mt-5 ">
 
                                             <a href="" className="cursor-pointer"><GoogleIcon /></a>
 
@@ -46,7 +46,7 @@ const RootTeam = () => {
 
                                             <a href="" className="cursor-pointer"><GithubIcon /></a>
 
-                                            <a href="" className="cursor-pointer"><InstagramIcon /></a>
+                                            {/* <a href="" className="cursor-pointer"><InstagramIcon /></a> */}
 
                                             <a href="" className="cursor-pointer"><LinkedinIcon /></a>
 

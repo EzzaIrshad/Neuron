@@ -5,7 +5,7 @@ const RootDownload = () => {
         <div id='download' className='w-full flex flex-col gap-14 mt-35'>
             <div>
                 <h1 className="text-[#74726f] text-center font-medium text-base/6">DOWNLOAD THE APP</h1>
-                <h2 className="text-[#121211] text-center text-[40px] font-semibold mt-4">Neuron for all your devices</h2>
+                <h2 className="text-[#121211] text-center text-[clamp(1.8rem,5vw,2.5rem)] font-semibold mt-4">Neuron for all your devices</h2>
             </div>
             <div className='flex gap-6 max-lg:flex-col max-lg:items-center'>
                 <div className='flex flex-1 flex-col p-2 xl:pb-8 bg-white gap-8 lg:gap-12 rounded-4xl shadow-[0_0_8px_1px_rgba(0,0,0,0.15)]'>
