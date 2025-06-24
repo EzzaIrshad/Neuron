@@ -98,10 +98,15 @@ const RootHeader = () => {
                         Neuron fuses Artificial Intelligence, synthetic biology, and advanced materials to unlock the future of cloud storage and human-data interaction.
                     </p>
                     <div className="flex justify-center items-center gap-9 sm:flex-row flex-col">
-                        <button className="bg-[#0d6aff] text-white px-5 py-2.5 rounded-full font-medium">
+                        <button
+                            style={{ background: "linear-gradient(336.57deg, rgba(0, 74, 185, 0.4) 32.06%, rgba(255, 245, 253, 0.4) 78.63%), linear-gradient(138.02deg, #0D6AFF 5.96%, #004AB9 96.24%)"}}
+                            className="text-white px-5 py-2.5 rounded-full font-medium shadow-lg hover:shadow-[0_8px_15px_rgba(0,0,0,0.25)] hover:-translate-y-0.5 active:shadow-none active:translate-y-0 transition-all duration-300 ease-[cubic-bezier(.23,1,0.32,1)]">
+
                             Create account
                         </button>
-                        <button className="bg-[#121211] text-white px-5 py-2.5 rounded-full font-medium">
+                        <button 
+                        style={{ background: "linear-gradient(147deg, #4B4E53 0%, #000000 74%)"}}
+                            className="text-white px-5 py-2.5 rounded-full font-medium shadow-lg hover:shadow-[0_8px_15px_rgba(0,0,0,0.25)] hover:-translate-y-0.5 active:shadow-none active:translate-y-0 transition-all duration-300 ease-[cubic-bezier(.23,1,0.32,1)]">
                             Downloads
                         </button>
                         <a
@@ -110,6 +115,7 @@ const RootHeader = () => {
                         >
                             See plans and pricing
                         </a>
+                        
                     </div>
                 </div>
 

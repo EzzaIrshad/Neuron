@@ -16,10 +16,10 @@ const RootDownload2 = () => {
                         </p>
                     </div>
                     <div className="flex gap-12 max-md:flex-col max-md:gap-4 max-sm:gap-3">
-                        <button className="px-4 py-3 text-base tracking-wide leading-6 text-white rounded-lg cursor-pointer bg-[#121211]">
+                        <button className="px-4 py-2 text-base leading-6 tracking-wide bg-black border-2 border-[#1A1A1A] rounded-md text-white transition-all duration-300 ease-[cubic-bezier(.23,1,0.32,1)] hover:shadow-[0_8px_15px_rgba(0,0,0,0.25)] hover:-translate-y-0.5 active:shadow-none active:translate-y-0 focus:outline-none cursor-pointer select-none">
                             Download for iOS
                         </button>
-                        <button className="px-4 py-3 text-base tracking-wide leading-6 rounded-lg border cursor-pointer border-[#121211] text-[#121211] max-sm:w-full max-sm:max-w-[300px]">
+                        <button className="max-sm:w-full max-sm:max-w-[300px] px-4 py-3 tracking-wide leading-6 bg-transparent border-2 border-[#1A1A1A] rounded-lg text-[#3B3B3B] text-base font-semibold transition-all duration-300 ease-[cubic-bezier(.23,1,0.32,1)] hover:bg-[#1A1A1A] hover:text-white hover:shadow-[0_8px_15px_rgba(0,0,0,0.25)] hover:-translate-y-0.5 active:shadow-none active:translate-y-0 focus:outline-none cursor-pointer select-none">
                             Download for Android
                         </button>
                     </div>
@@ -30,7 +30,7 @@ const RootDownload2 = () => {
                             alt="QR Code"
                             width={176}
                             height={176}
-                            
+
                         />
                     </div>
                 </div>

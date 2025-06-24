@@ -49,7 +49,7 @@ const RootNavbar: React.FC = () => {
         </button>
 
         {/* Desktop Navigation */}
-        <div className="flex gap-12 items-center max-2xl:gap-6 max-lg:hidden">
+        <div className="flex  items-center justify-between w-[70%] max-lg:hidden">
           {navItems.map((item) => (
             <NavbarItem key={item.id} text={item.item} id={item.id} />
           ))}
@@ -75,9 +75,8 @@ const RootNavbar: React.FC = () => {
 
       {/* Mobile Sidebar Menu */}
       <aside
-        className={`fixed top-0 right-0 h-full w-[280px] bg-white shadow-[-2px_0_6px_rgba(0,0,0,0.15)] p-5 transition-transform duration-300 ease-in-out z-[1000] max-lg:block ${
-          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed top-0 right-0 h-full w-[280px] bg-white shadow-[-2px_0_6px_rgba(0,0,0,0.15)] p-5 transition-transform duration-300 ease-in-out z-[1000] max-lg:block ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
       >
         <div className="flex justify-between items-center mb-5">
           <h2 className="text-xl font-semibold">Menu</h2>
@@ -147,10 +146,10 @@ interface NavbarItemProps {
 }
 
 const NavbarItem: React.FC<NavbarItemProps> = ({ text, id }) => (
+
   <a
     href={id}
-    className="h-full flex items-center text-base font-medium text-[#121211] cursor-pointer"
-  >
+    className="h-full flex items-center text-base font-medium text-[#121211] cursor-pointer no-underline pb-2 relative overflow-hidden after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-gray-800 after:transition-all after:duration-500 after:bottom-0 after:left-0 hover:after:w-full hover:after:transition-[width] hover:after:duration-250 hover:after:ease-in-out">
     {text}
   </a>
 );
@@ -173,11 +172,18 @@ const NavbarButton: React.FC<NavbarButtonProps> = ({ text, id, onClick }) => {
   const buttonElement = (
     <button
       onClick={onClick}
-      className={`${baseClass} ${
-        id === 'signin'
-          ? 'bg-[#0d6aff] text-white hover:bg-[#0d56ff]'
-          : 'border border-[#121211] text-[#121211]'
-      }`}
+      style={
+        id !== 'plan'
+          ? {
+            background:
+              "linear-gradient(336.57deg, rgba(0, 74, 185, 0.4) 32.06%, rgba(255, 245, 253, 0.4) 78.63%), linear-gradient(138.02deg, #0D6AFF 5.96%, #004AB9 96.24%)"
+          }
+          : undefined
+      }
+      className={`${baseClass} ${id !== 'plan'
+        ? 'bg-[#0d6aff] cursor-pointer text-white hover:bg-[#0d56ff]'
+        : 'border border-[#121211]'
+        }`}
     >
       {text}
     </button>

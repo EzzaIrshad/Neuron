@@ -62,12 +62,12 @@ const RootResources = () => {
                     </div>
 
                     {/* Cards */}
-                    <div ref={containerRef} className="flex gap-6 w-full overflow-x-scroll scroll-smooth no-scrollbar p-4 ">
+                    <div ref={containerRef} className="flex sm:px-10 gap-6 w-full overflow-x-scroll scroll-smooth no-scrollbar p-4 ">
                         {
                             resource.map((item, index) => (
-                                <div key={index} className="flex flex-col p-1 rounded-[28px] shadow-[0_4px_12px_2px_rgba(0,0,0,0.15)] min-w-[80vw] sm:min-w-sm xl:min-w-[488px] ">
+                                <div key={index} className="flex flex-col p-1 rounded-[28px] shadow-[0_4px_12px_2px_rgba(0,0,0,0.15)] min-w-[80vw] sm:min-w-sm xl:min-w-[400px] ">
                                     <div className="max-w-[488px] max-h-[209px]">
-                                        <Image src={item.image} alt="resources" height={209} width={488} className="rounded-[24px] h-auto" />
+                                        <Image src={item.image} alt="resources" height={209} width={400} className="rounded-[24px] h-auto" />
                                     </div>
                                     <div className="flex flex-col p-6 gap-8 justify-between">
                                         <div>

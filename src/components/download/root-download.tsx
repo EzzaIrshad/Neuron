@@ -7,7 +7,7 @@ const RootDownload = () => {
                 <h1 className="text-[#74726f] text-center font-medium text-base/6">DOWNLOAD THE APP</h1>
                 <h2 className="text-[#121211] text-center text-[clamp(1.8rem,5vw,2.5rem)] font-semibold mt-4">Neuron for all your devices</h2>
             </div>
-            <div className='flex gap-6 max-lg:flex-col max-lg:items-center'>
+            <div className='flex gap-6 sm:px-10 max-lg:flex-col max-lg:items-center'>
                 <div className='flex flex-1 flex-col p-2 xl:pb-8 bg-white gap-8 lg:gap-12 rounded-4xl shadow-[0_0_8px_1px_rgba(0,0,0,0.15)]'>
                     <div className='rounded-3xl'>
                         <Image src="/images/d1.png" alt="browser" width={500} height={282} />

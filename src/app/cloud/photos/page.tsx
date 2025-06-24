@@ -521,12 +521,12 @@ const PhotosPage = () => {
       await deleteFile(id);
       toast.success("Photo moved to trash", {
         description: throwback,
-        action: {
-          label: "Undo",
-          onClick: () => {
-            toast.info("Undo delete functionality coming soon.");
-          },
-        },
+        // action: {
+        //   label: "Undo",
+        //   onClick: () => {
+        //     toast.info("Undo delete functionality coming soon.");
+        //   },
+        // },
       });
     } catch (error: unknown) {
       console.error("Failed to delete photo:", error);
@@ -536,7 +536,25 @@ const PhotosPage = () => {
 
   // Placeholder handlers
   const handleUploadPhoto = useCallback(() => toast.info("Upload photo functionality coming soon!"), []);
-  const handleDownloadImage = useCallback(() => toast.info("Download functionality coming soon!"), []);
+const handleDownloadImage = useCallback(async (src: string) => {
+  try {
+    const response = await fetch(src, { mode: "cors" });
+    if (!response.ok) throw new Error("Failed to fetch image for download.");
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `photo-${new Date().toISOString()}.jpg`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+    toast.success("Photo downloaded successfully!");
+  } catch (error) {
+    toast.error("Failed to download photo.");
+  }
+}, []);
+
   const handleShareImage = (id: string) => {
       setFileIdToShare(id);
       setShareDialogOpen(true);

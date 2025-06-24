@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useRef, useState } from "react";
+import { act, useRef, useState } from "react";
 import { JSX } from "react/jsx-runtime";
 import { toast } from "sonner";
 import {
@@ -28,6 +28,7 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -146,7 +147,7 @@ interface UploadFile {
   progress: number;
   status: 'preparing' | 'uploading' | 'finalizing' | 'success' | 'failed';
   message: string;
-  fakeSizeMB: number;
+  actualSizeMB: number;
   uploadedAmountMB: number;
   error?: string;
 }
@@ -252,7 +253,7 @@ const UploadModal: React.FC<{
                 </motion.span>
               )}
             </div>
-            <Button
+            {/* <Button
               variant="ghost"
               size="icon"
               onClick={onClose}
@@ -260,9 +261,11 @@ const UploadModal: React.FC<{
               className="rounded-full"
             >
               <XIcon className="h-4 w-4" />
-            </Button>
+            </Button> */}
           </DialogTitle>
         </DialogHeader>
+
+        <DialogDescription className="sr-only"/>
 
         {uploads.length === 0 ? (
           <motion.div
@@ -338,9 +341,9 @@ const UploadModal: React.FC<{
 
                     <div className="flex justify-between text-xs text-gray-500 mt-1">
                       <span>{upload.message}</span>
-                      {upload.status !== 'preparing' && upload.fakeSizeMB > 0 && (
+                      {upload.status !== 'preparing' && upload.actualSizeMB > 0 && (
                         <span>
-                          {upload.uploadedAmountMB.toFixed(1)} MB / {upload.fakeSizeMB.toFixed(1)} MB
+                          {upload.uploadedAmountMB.toFixed(2)} MB / {upload.actualSizeMB.toFixed(2)} MB
                         </span>
                       )}
                     </div>
@@ -494,8 +497,7 @@ export function CreateMenu({ parentId }: { parentId?: string }) {
       }
 
       const fileId = `${file.name}-${Date.now()}`;
-      const fakeSizeMB = parseFloat((Math.random() * (50 - 2) + 2).toFixed(1));
-
+      const actualSizeMB = parseFloat((file.size / (1024 * 1024)).toFixed(2));
       setActiveUploads((prev) => [
         ...prev,
         {
@@ -505,7 +507,7 @@ export function CreateMenu({ parentId }: { parentId?: string }) {
           progress: 0,
           status: 'preparing',
           message: 'Initializing upload...',
-          fakeSizeMB: fakeSizeMB,
+          actualSizeMB: actualSizeMB,
           uploadedAmountMB: 0,
         },
       ]);
@@ -517,7 +519,7 @@ export function CreateMenu({ parentId }: { parentId?: string }) {
       const progressInterval = setInterval(() => {
         if (fakeProgress < 90) {
           fakeProgress = Math.min(fakeProgress + Math.floor(Math.random() * 10) + 5, 90);
-          const uploadedAmount = (fakeProgress / 100) * fakeSizeMB;
+          const uploadedAmount = (fakeProgress / 100) * actualSizeMB;
           updateUploadStatus(fileId, {
             status: 'uploading',
             message: `Uploading...`,
@@ -535,7 +537,7 @@ export function CreateMenu({ parentId }: { parentId?: string }) {
         clearInterval(progressInterval);
         updateUploadStatus(fileId, {
           progress: 90,
-          uploadedAmountMB: (90 / 100) * fakeSizeMB,
+          uploadedAmountMB: (90 / 100) * actualSizeMB,
           message: 'Upload nearly complete...',
         });
         await new Promise((res) => setTimeout(res, 500));
@@ -544,7 +546,7 @@ export function CreateMenu({ parentId }: { parentId?: string }) {
           status: 'finalizing',
           message: 'Finalizing...',
           progress: 95,
-          uploadedAmountMB: fakeSizeMB,
+          uploadedAmountMB: actualSizeMB,
         });
         await new Promise((res) => setTimeout(res, 1500 + Math.random() * 500));
 
@@ -552,7 +554,7 @@ export function CreateMenu({ parentId }: { parentId?: string }) {
           status: 'success',
           message: 'Upload Complete ✔️',
           progress: 100,
-          uploadedAmountMB: fakeSizeMB,
+          uploadedAmountMB:  actualSizeMB,
           error: undefined,
         });
       } catch (error: unknown) {
@@ -639,6 +641,9 @@ export function CreateMenu({ parentId }: { parentId?: string }) {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Create New Folder</DialogTitle>
+            <DialogDescription className="sr-only">
+              {/* Description of dialog content */}
+            </DialogDescription>
           </DialogHeader>
 
           <Input

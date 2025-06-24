@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
-import { LogoSvg } from '../logo_svg'
-import { FacebookIcon, GoogleIcon, InstagramIcon, LinkedinIcon, WhatsappIcon } from '../socialIcons'
+import { LogoIconSvgWhite, LogoSvg } from '../logo_svg'
+import { FacebookIcon, GoogleIcon, TwitterIcon, LinkedinIcon, WhatsappIcon } from '../socialIcons'
 
 const RootFooter = () => {
     const navigation = [
@@ -48,14 +48,14 @@ const RootFooter = () => {
     ];
 
     return (
-        <div className='w-full'>
-            <div className='w-full border-b border-t border-b-[#d9dbe9] border-t-[#eff0f6]'>
+        <div className='w-full bg-[#1E2939]'>
+            <div className='w-full bg-[#101828]'>
                 <div className='container mx-auto px-10 '>
                     <div className='flex max-sm:flex-col py-15 max-sm:gap-10 max-sm:items-center  justify-between'>
                         <div className='w-[177px] h-[70px]'>
-                            <LogoSvg />
+                            <LogoIconSvgWhite />
                         </div>
-                        <p className='text-[#74726f] text-lg max-sm:w-[80vw] w-[35vw]'>Secure. Smart. Scalable. Effortless cloud storage for all your files — anytime, anywhere.</p>
+                        <p className='text-[#cac5be] text-lg max-sm:w-[80vw] w-[35vw]'>Secure. Smart. Scalable. Effortless cloud storage for all your files — anytime, anywhere.</p>
                     </div>
                 </div>
             </div>
@@ -66,10 +66,10 @@ const RootFooter = () => {
                         {
                             navigation.map((item, index) => (
                                 <div key={index} className='flex flex-1 min-w-[110px] flex-col gap-10'>
-                                    <h4 className='text-[#121211] text-lg font-bold'>{item.title}</h4>
+                                    <h4 className='text-white text-lg font-bold'>{item.title}</h4>
                                     <ul className='space-y-2'>
                                         {item.links.map((link, index) => (
-                                            <li key={index} className='text-[#74726f] text-[1vw] cursor-pointer'>{link}</li>
+                                            <li key={index} className='text-[#ebebeb] text-[1vw] cursor-pointer'>{link}</li>
                                         ))}
                                     </ul>
                                 </div>
@@ -78,9 +78,9 @@ const RootFooter = () => {
                     </div>
 
                     <div id="subscribe" className='xl:w-[30%] flex flex-col gap-10 '>
-                        <h4 className='text-[#121211] text-xl font-bold'>Subscribe to our newsletter</h4>
+                        <h4 className='text-white text-xl font-bold'>Subscribe to our newsletter</h4>
                         <div className='flex flex-col gap-6'>
-                            <p className="text-md text-[#74726f]">
+                            <p className="text-md text-[#ebebeb]">
                                 We care about your data. Read our <a href="#" className="cursor-pointer hover:underline font-bold">Privacy Policy</a>
                             </p>
 
@@ -96,7 +96,8 @@ const RootFooter = () => {
                             />
                             <button
                                 type="submit"
-                                className="w-fit rounded-full bg-[#121211] px-6 py-4.5 font-semibold text-white shadow-xs"
+                                style={{ background: "linear-gradient(336.57deg, rgba(0, 74, 185, 0.4) 32.06%, rgba(255, 245, 253, 0.4) 78.63%), linear-gradient(138.02deg, #0D6AFF 5.96%, #004AB9 96.24%)"}}
+                                className="w-fit px-6 py-3 rounded-full font-semibold shadow-xs text-white transition-all duration-300 ease-[cubic-bezier(.23,1,0.32,1)] hover:shadow-[0_8px_15px_rgba(255,255,255,0.25)] hover:-translate-y-0.5 active:shadow-none active:translate-y-0 focus:outline-none cursor-pointer select-none"
                             >
                                 Subscribe
                             </button>
@@ -104,14 +105,23 @@ const RootFooter = () => {
                     </div>
                 </div>
 
-                <div className='flex max-lg:flex-col-reverse gap-y-5 justify-between my-[1vw]'>
-                    <p className='text-[#121211] text-[1vw]'>Copyright © 2025 Neuron | All Rights Reserved </p>
+                <div className='flex max-lg:flex-col-reverse gap-y-5 justify-between py-[2vw] bg-[#1E2939]'>
+                    <p className='text-white text-[1vw]'>Copyright © 2025 Neuron | All Rights Reserved </p>
                     <div className='flex gap-8 items-center cursor-pointer'>
-                        <GoogleIcon />
-                        <FacebookIcon />
-                        <InstagramIcon />
-                        <LinkedinIcon />
-                        <WhatsappIcon />
+                        {[
+                            { icon: <GoogleIcon /> },
+                            { icon: <FacebookIcon /> },
+                            { icon: <WhatsappIcon /> },
+                            { icon: <LinkedinIcon /> },
+                            { icon: <TwitterIcon /> },
+                        ].map(({ icon }, i) => (
+                            <div
+                                key={i}
+                                className="hover:shadow-[0_8px_15px_rgba(0,0,0,0.25)] hover:-translate-y-0.5 active:shadow-none active:translate-y-0 hover:bg-transparent rounded-full transition-all duration-300 ease-[cubic-bezier(.23,1,0.32,1)] cursor-pointer"
+                            >
+                                {icon}
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

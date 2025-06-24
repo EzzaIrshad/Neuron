@@ -516,7 +516,7 @@ const ConversionModal = ({
                 >
                   <Progress
                     value={internalProgress}
-                    className={`${progressColor()} transition-all duration-300 h-2.5 bg-gray-700/50`}
+                    className={`${progressColor()} transition-all duration-300 h-2.5 bg-gray-400`}
                   />
                 </motion.div>
                 <div className="flex justify-between text-xs text-gray-400">
@@ -558,7 +558,9 @@ const ConversionModal = ({
                   {[0, 20, 40, 60, 80, 100].map((point) => (
                     <motion.div
                       key={point}
-                      initial={{ scale: 0.8 }}
+                      initial={{ 
+                        scale: 0.8,
+                       }}
                       animate={{
                         scale: internalProgress >= point ? 1.1 : 0.9,
                         backgroundColor: internalProgress >= point ? progressColor() : 'rgba(55, 65, 81, 0.5)',
@@ -572,8 +574,9 @@ const ConversionModal = ({
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                           transition={{ delay: 0.2 }}
+                          className='bg-emerald-400 rounded-full size-5 flex items-center justify-center'
                         >
-                          <Check size={12} className="text-white" />
+                          <Check size={14} className="text-black" />
                         </motion.div>
                       )}
                     </motion.div>

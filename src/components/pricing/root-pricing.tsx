@@ -8,8 +8,8 @@ const RootPricing = () => {
         <div id="pricing" className="w-full py-18 mt-30" style={{ background: "linear-gradient(251deg, #E2E7FF 0%, #FFEAEA 50%, #D9DAFB 100%)" }}>
             <div className="container mx-auto px-4 ">
                 <div className="flex flex-col gap-24">
-                    <div className="flex justify-between items-center max-lg:flex-col">
-                        <div className="max-w-[415px] max-lg:text-center">
+                    <div className="flex justify-between items-center max-lg:flex-col px-10">
+                        <div className="max-w-[500px] max-lg:text-center">
                             <h1 className="text-[#74726f] font-medium text-base/6">PLANS & PRICING</h1>
                             <h2 className="text-[#121211] text-[clamp(1.8rem,5vw,2.5rem)] font-semibold mt-4">Neuron is better than traditional cloud</h2>
                         </div>
@@ -20,10 +20,10 @@ const RootPricing = () => {
                         </div>
                     </div>
 
-                    <div className="grid lg:grid-cols-3 col-span-1 gap-6 place-content-center mx-7 sm:mx-auto">
+                    <div className="grid lg:grid-cols-3 col-span-1 gap-6 place-content-center mx-7 sm:mx-auto xl:mx-20">
                         <PricingCard type="Basic" price="Free" storage="5 GB" />
-                        <PricingCard type="Personal" price="USD$1.99" storage="100 GB" />
-                        <PricingCard type="Standard" price="USD$5.99" storage="10TB" />
+                        <PricingCard type="Personal" price={plan ? "USD$1.99" : "USD$22.99"} storage="100 GB" />
+                        <PricingCard type="Standard" price={plan ? "USD$5.99" : "USD$70.99"} storage="10TB" />
                     </div>
                 </div>
             </div>
@@ -42,19 +42,19 @@ interface PricingCardProps {
 const PricingCard = ({ type, price, storage }: PricingCardProps) => {
 
     return (
-        <div className="max-w-[490px] flex flex-col p-6 gap-6 lg:gap-10 rounded-3xl bg-white shadow-[0_0_12px_0_rgba(0,0,0,0.15)">
+        <div className={`max-w-[490px] flex flex-col p-6 gap-6 rounded-3xl bg-white ${type === "Personal" && "shadow-[0px_10px_20px_rgba(0,0,0,0.23)]"}`}>
             <div className="max-sm:flex max-sm:items-center max-sm:justify-between">
-                <h2 className="text-[clamp(1rem,1.5vw,1.75rem)] font-semibold text-[#121211]">
+                <h2 className="text-[clamp(1rem,1vw,1.75rem)] font-semibold text-[#121211]">
                     <span>Neuron 365</span>
                     <br />
                     <span>{type}</span>
                 </h2>
-                <p className={`sm:mt-8 text-[clamp(1.6rem,2vw,2.8rem)] font-semibold text-[#121211] max-md:max-w-full  ${price == "Free" && 'sm:mt-12'}`}>
+                <p className={`sm:mt-5 text-cn text-[clamp(1.6rem,2vw,2.8rem)] font-bold text-[#121211] max-md:max-w-full  ${price == "Free" && 'sm:mt-6'}`}>
                     {price}
                     <span className={`block text-sm ${price == "Free" && 'hidden'}`}>/month</span>
                 </p>
             </div>
-            <p className={`text-[#74726f] max-sm:text-sm mt-3 sm:mt-8`}>
+            <p className={`text-[#74726f] text-sm mt-3 pr-3`}>
                 {price == "Free" ? 
                     "Get started with Neuron for free. No credit card required." :
                     (
@@ -66,10 +66,10 @@ const PricingCard = ({ type, price, storage }: PricingCardProps) => {
                 }
             </p>
 
-            <button className="self-stretch px-4 py-3 w-fit text-sm sm:text-base tracking-wide text-white rounded-md bg-[#121211]">
-                Sign up for free
+            <button className="self-stretch px-4 py-2 w-fit text-sm tracking-wide bg-black border-2 border-[#1A1A1A] rounded-md text-white transition-all duration-300 ease-[cubic-bezier(.23,1,0.32,1)] hover:shadow-[0_8px_15px_rgba(0,0,0,0.25)] hover:-translate-y-0.5 active:shadow-none active:translate-y-0 focus:outline-none cursor-pointer select-none">
+                {price == "Free" ? "Get started for free" : "Subscribe now"}
             </button>
-            <ul className="text-xs sm:text-sm tracking-wide leading-6 text-neutral-500 max-md:max-w-full">
+            <ul className="text-xs 2xl:text-sm tracking-wide leading-6 text-neutral-500 max-md:max-w-full">
                 <li className="list-disc ml-6">For one person</li>
                 <li className="list-disc ml-6">{storage} of cloud storage</li>
                 <li className="list-disc ml-6">Works on Windows, macOS, Linux, iOS, and Android™</li>

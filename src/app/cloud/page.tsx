@@ -3,12 +3,15 @@
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTableFilterStore } from "@/stores/useTableFilterStore";
 import { toast } from "sonner";
 import {
   ColumnDef,
+  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   useReactTable,
+  getFilteredRowModel,
   getSortedRowModel,
 } from "@tanstack/react-table";
 import {
@@ -48,44 +51,47 @@ export default function Home() {
   const { files, fetchFiles, updateFile } = useCloudStore();
   const [editFileId, setEditFileId] = useState<string>("");
   const [editName, setEditName] = useState("");
+  const [previewImageSrc, setPreviewImageSrc] = useState<string | null>(null);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
-const supabase = createClient();
+  const { search } = useTableFilterStore();
+  const supabase = createClient();
 
-async function fetchUsersByEmails(emails: string[]) {
-  // Step 1: Set allowed emails using your RPC function
-  const { error: rpcError } = await supabase.rpc('set_allowed_emails', {
-    allowed_emails: emails,
+  async function fetchUsersByEmails(emails: string[]) {
+    // Step 1: Set allowed emails using your RPC function
+    const { error: rpcError } = await supabase.rpc('set_allowed_emails', {
+      allowed_emails: emails,
+    });
+
+    if (rpcError) {
+      console.error('Error setting allowed emails:', rpcError);
+      return null;
+    }
+
+    // Step 2: Now fetch the users
+    const { data: users, error } = await supabase
+      .from('profiles')
+      .select('id, email')
+      .in('email', ['mahnoorbabar61@gmail.com']);
+
+    if (error) {
+      console.error('Error fetching users:', error);
+      return null;
+    }
+
+    return users;
+  }
+
+  // ✅ Example usage
+  const emailArray = ['mahnoorbabar61@gmail.com', 'fitmorelifenow@gmail.com'];
+
+  fetchUsersByEmails(emailArray).then((users) => {
+    if (users?.length) {
+      console.log('✅ Fetched users:', users);
+    } else {
+      console.log('❌ No users found for the given emails.');
+    }
   });
-
-  if (rpcError) {
-    console.error('Error setting allowed emails:', rpcError);
-    return null;
-  }
-
-  // Step 2: Now fetch the users
-  const { data: users, error } = await supabase
-    .from('profiles')
-    .select('id, email')
-    .in('email', ['mahnoorbabar61@gmail.com']);
-
-  if (error) {
-    console.error('Error fetching users:', error);
-    return null;
-  }
-
-  return users;
-}
-
-// ✅ Example usage
-const emailArray = ['mahnoorbabar61@gmail.com', 'fitmorelifenow@gmail.com'];
-
-fetchUsersByEmails(emailArray).then((users) => {
-  if (users?.length) {
-    console.log('✅ Fetched users:', users);
-  } else {
-    console.log('❌ No users found for the given emails.');
-  }
-});
 
   // // Redirect to login if not authenticated
   // useEffect(() => {
@@ -102,6 +108,11 @@ fetchUsersByEmails(emailArray).then((users) => {
       );
     }
   }, [user, fetchFiles]);
+
+  // Sync search from Zustand with table column filters
+  useEffect(() => {
+    setColumnFilters([{ id: "name", value: search }]);
+  }, [search]);
 
   // Memoize recent images for Carousel
   const recentImages = useMemo(
@@ -278,8 +289,10 @@ fetchUsersByEmails(emailArray).then((users) => {
                 onClick={() => {
                   if (file.is_folder) {
                     router.push(`/cloud/files?folder=${file.id}`);
-                  } else {
+                  } else if (file.file_extension === "pdf") {
                     window.open(file.file_url, "_blank");
+                  } else if (file.type === "image" || file.type === "video") {
+                    setPreviewImageSrc(file.file_url);
                   }
                 }}
               >
@@ -295,11 +308,14 @@ fetchUsersByEmails(emailArray).then((users) => {
   const table = useReactTable({
     data: files,
     columns,
+    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onRowSelectionChange: setRowSelection,
     state: {
       rowSelection,
+      columnFilters,
     },
   });
 
@@ -369,9 +385,9 @@ fetchUsersByEmails(emailArray).then((users) => {
                           {header.isPlaceholder
                             ? null
                             : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
                         </TableHead>
                       ))}
                     </TableRow>
@@ -423,6 +439,14 @@ fetchUsersByEmails(emailArray).then((users) => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {previewImageSrc && (
+        <Dialog open={!!previewImageSrc} onOpenChange={() => setPreviewImageSrc(null)}>
+          <DialogContent className="w-full h-auto p-0 overflow-hidden" >
+            <Image src={previewImageSrc} alt="Preview" width={1920} height={1080} className="h-auto" />
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 }

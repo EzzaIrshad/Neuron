@@ -5,9 +5,11 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import {
   ColumnDef,
+  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   useReactTable,
+  getFilteredRowModel,
   getSortedRowModel,
 } from "@tanstack/react-table";
 import {
@@ -45,6 +47,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { useCloudStore } from "@/stores/useCloudStore";
 import { CloudModel } from "@/types/CloudModel";
 import Image from "next/image";
+import { useTableFilterStore } from "@/stores/useTableFilterStore";
 
 export default function Files() {
   const router = useRouter();
@@ -55,6 +58,9 @@ export default function Files() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [previewImageSrc, setPreviewImageSrc] = useState<string | null>(null);
   const [rowSelection, setRowSelection] = useState({});
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
+  const { search } =useTableFilterStore();
 
   useEffect(() => {
     if (user?.id) {
@@ -63,6 +69,11 @@ export default function Files() {
       );
     }
   }, [user, fetchFiles]);
+
+    // Sync search from Zustand with table column filters
+  useEffect(() => {
+    setColumnFilters([{id: "name", value: search}]);
+  }, [search]);
 
   const columns: ColumnDef<CloudModel>[] = [
     {
@@ -80,7 +91,7 @@ export default function Files() {
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
-          className="border-gray-300 bg-[rgba(255,255,255,0.4)] hover:bg-[rgba(255,255,255,0.7)]"
+          className="mx-3 border-gray-300 bg-[rgba(255,255,255,0.4)] hover:bg-[rgba(255,255,255,0.7)]"
         />
       ),
       enableSorting: false,
@@ -255,11 +266,14 @@ export default function Files() {
   const table = useReactTable({
     data: files,
     columns,
+    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onRowSelectionChange: setRowSelection,
     state: {
       rowSelection,
+      columnFilters,
     },
   });
 
@@ -347,11 +361,7 @@ export default function Files() {
 
       {previewImageSrc && (
         <Dialog open={!!previewImageSrc} onOpenChange={() => setPreviewImageSrc(null)}>
-          <DialogHeader>
-            <DialogTitle>
-                Preview
-            </DialogTitle>
-          </DialogHeader>
+          
           <DialogContent className="w-full h-auto p-0 overflow-hidden" >
             <Image src={previewImageSrc} alt="Preview" width={1920} height={1080} className="h-auto" />
           </DialogContent>
