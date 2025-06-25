@@ -1,15 +1,17 @@
-
 import Image from "next/image"
 import { FacebookIcon, GoogleIcon, GithubIcon, LinkedinIcon, TwitterIcon } from "../socialIcons"
 import Aos from "aos"
 import "aos/dist/aos.css" // Import AOS styles
+import { useEffect } from "react"
 
 const RootTeam = () => {
-    Aos.init({
+    useEffect(()=>{
+        Aos.init({
         duration: 500,
         easing: "ease-out-sine",
         offset: 100,
     });
+    })
     const teamMembers = [
         {
             name: "Ezza Irshad",

@@ -538,6 +538,7 @@ const PhotosPage = () => {
   const handleUploadPhoto = useCallback(() => toast.info("Upload photo functionality coming soon!"), []);
 const handleDownloadImage = useCallback(async (src: string) => {
   try {
+     if (typeof window === "undefined" || typeof document === "undefined") return;
     const response = await fetch(src, { mode: "cors" });
     if (!response.ok) throw new Error("Failed to fetch image for download.");
     const blob = await response.blob();

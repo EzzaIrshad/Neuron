@@ -1,12 +1,15 @@
 import Image from 'next/image'
 import { toast } from 'sonner';
 import Aos from 'aos'
+import { useEffect } from 'react';
 
 const RootDownload = () => {
-    Aos.init({
+    useEffect(() => {
+        Aos.init({
         duration: 1000,
         easing: 'ease-in-out'
     });
+    }, []);
     return (
         <div id='download' className='w-full flex flex-col gap-14 mt-35'>
             <div>
