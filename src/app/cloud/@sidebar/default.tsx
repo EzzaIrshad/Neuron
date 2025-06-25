@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
-import { act, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { JSX } from "react/jsx-runtime";
 import { toast } from "sonner";
 import {
@@ -13,7 +13,7 @@ import {
   PhotoIcon,
   ShareIcon,
 } from "../components/icons";
-import { Plus, XIcon, Upload as UploadIcon, FolderOpen as FolderOpenIcon } from "lucide-react";
+import { Plus, Upload as UploadIcon, FolderOpen as FolderOpenIcon } from "lucide-react";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useCloudStore } from "@/stores/useCloudStore";
 import {

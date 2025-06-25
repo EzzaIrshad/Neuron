@@ -1,6 +1,6 @@
 
 import Image from "next/image"
-import { FacebookIcon, GoogleIcon, GithubIcon, LinkedinIcon, WhatsappIcon, TwitterIcon } from "../socialIcons"
+import { FacebookIcon, GoogleIcon, GithubIcon, LinkedinIcon, TwitterIcon } from "../socialIcons"
 import Aos from "aos"
 import "aos/dist/aos.css" // Import AOS styles
 

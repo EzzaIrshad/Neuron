@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import { LogoIconSvgWhite, LogoSvg } from '../logo_svg'
+import { LogoIconSvgWhite } from '../logo_svg'
 import { FacebookIcon, GoogleIcon, TwitterIcon, LinkedinIcon, WhatsappIcon } from '../socialIcons'
 
 const RootFooter = () => {

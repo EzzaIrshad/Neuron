@@ -551,7 +551,7 @@ const handleDownloadImage = useCallback(async (src: string) => {
     window.URL.revokeObjectURL(url);
     toast.success("Photo downloaded successfully!");
   } catch (error) {
-    toast.error("Failed to download photo.");
+    toast.error("Failed to download photo." + (error instanceof Error ? ` ${error.message}` : ""));
   }
 }, []);
 
