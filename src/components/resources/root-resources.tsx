@@ -1,16 +1,18 @@
 "use client";
 
 import Image from "next/image"
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Aos from "aos";
 import "aos/dist/aos.css"; // Import AOS styles
 const RootResources = () => {
     
-        Aos.init({
+       useEffect(() => {
+         Aos.init({
             duration: 1000,
             easing: "ease-out-sine",
             offset: 100,
         });
+    }, []);
     const resource = [
         {
             type: "Blog",

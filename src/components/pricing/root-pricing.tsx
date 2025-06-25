@@ -1,17 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Aos from "aos";
 import "aos/dist/aos.css"; // Import AOS styles
 
 const RootPricing = () => {
     const [plan, setPlan] = useState(true);
-    Aos.init(
-        {
+    useEffect(()=>{
+        Aos.init({
             duration: 1000,
             easing: "ease-in-cubic",
             offset: 100,
-        }
-    );
+        });
+    })
     return (
         <div id="pricing" className="w-full py-18 mt-30" style={{ background: "linear-gradient(251deg, #E2E7FF 0%, #FFEAEA 50%, #D9DAFB 100%)" }}>
             <div className="container mx-auto px-4 ">
