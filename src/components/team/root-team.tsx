@@ -1,10 +1,15 @@
 
 import Image from "next/image"
 import { FacebookIcon, GoogleIcon, GithubIcon, LinkedinIcon, WhatsappIcon, TwitterIcon } from "../socialIcons"
-
+import Aos from "aos"
+import "aos/dist/aos.css" // Import AOS styles
 
 const RootTeam = () => {
-
+    Aos.init({
+        duration: 500,
+        easing: "ease-out-sine",
+        offset: 100,
+    });
     const teamMembers = [
         {
             name: "Ezza Irshad",
@@ -37,7 +42,7 @@ const RootTeam = () => {
                     <div className="grid grid-cols-1 xl:grid-cols-2 gap-30 px-6">
                         {
                             teamMembers.map((member, index) => (
-                                <div key={index} className="flex items-center max-sm:flex-col max-sm:max-w-[385px] p-1 rounded-[28px] bg-white shadow-[0_4px_12px_2px_rgba(0,0,0,0.15)]">
+                                <div data-aos="zoom-in" key={index} className="flex items-center max-sm:flex-col max-sm:max-w-[385px] p-1 rounded-[28px] bg-white shadow-[0_4px_12px_2px_rgba(0,0,0,0.15)]">
                                     <div className="flex-1">
                                         <Image src={member.image} alt="team_1" width={372} height={400} className="max-sm:h-[60vw] rounded-3xl object-cover object-top" />
                                     </div>

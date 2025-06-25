@@ -5,7 +5,6 @@ import { jwtDecode } from 'jwt-decode';
 import { createClient } from '@/lib/supabase/client';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { UserModel } from '@/types/UserModel';
-// import { useRouter } from 'next/navigation';
 
 declare const google: {
   accounts: {

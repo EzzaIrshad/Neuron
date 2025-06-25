@@ -1,9 +1,17 @@
 "use client";
 import { useState } from "react";
-
+import Aos from "aos";
+import "aos/dist/aos.css"; // Import AOS styles
 
 const RootPricing = () => {
     const [plan, setPlan] = useState(true);
+    Aos.init(
+        {
+            duration: 1000,
+            easing: "ease-in-cubic",
+            offset: 100,
+        }
+    );
     return (
         <div id="pricing" className="w-full py-18 mt-30" style={{ background: "linear-gradient(251deg, #E2E7FF 0%, #FFEAEA 50%, #D9DAFB 100%)" }}>
             <div className="container mx-auto px-4 ">
@@ -21,9 +29,9 @@ const RootPricing = () => {
                     </div>
 
                     <div className="grid lg:grid-cols-3 col-span-1 gap-6 place-content-center mx-7 sm:mx-auto xl:mx-20">
-                        <PricingCard type="Basic" price="Free" storage="5 GB" />
-                        <PricingCard type="Personal" price={plan ? "USD$1.99" : "USD$22.99"} storage="100 GB" />
-                        <PricingCard type="Standard" price={plan ? "USD$5.99" : "USD$70.99"} storage="10TB" />
+                        <PricingCard aos="zoom-in-right" type="Basic" price="Free" storage="5 GB" />
+                        <PricingCard aos="" type="Personal" price={plan ? "USD$1.99" : "USD$22.99"} storage="100 GB" />
+                        <PricingCard aos="zoom-in-left" type="Standard" price={plan ? "USD$5.99" : "USD$70.99"} storage="10TB" />
                     </div>
                 </div>
             </div>
@@ -34,15 +42,16 @@ const RootPricing = () => {
 export default RootPricing
 
 interface PricingCardProps {
+    aos: string;
     type: string;
     price: string;
     storage: string;
 }
 
-const PricingCard = ({ type, price, storage }: PricingCardProps) => {
+const PricingCard = ({ aos, type, price, storage }: PricingCardProps) => {
 
     return (
-        <div className={`max-w-[490px] flex flex-col p-6 gap-6 rounded-3xl bg-white ${type === "Personal" && "shadow-[0px_10px_20px_rgba(0,0,0,0.23)]"}`}>
+        <div data-aos={aos} className={`max-w-[490px] flex flex-col p-6 gap-6 rounded-3xl bg-white ${type === "Personal" && "shadow-[0px_10px_20px_rgba(0,0,0,0.23)]"}`}>
             <div className="max-sm:flex max-sm:items-center max-sm:justify-between">
                 <h2 className="text-[clamp(1rem,1vw,1.75rem)] font-semibold text-[#121211]">
                     <span>Neuron 365</span>

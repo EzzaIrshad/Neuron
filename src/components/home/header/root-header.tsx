@@ -8,6 +8,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import Image from "next/image";
 
 const RootHeader = () => {
+    
     const { user, signOut } = useAuthStore();
 
     const [showSignin, setShowSignin] = useState(false);

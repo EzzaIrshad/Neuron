@@ -1,6 +1,12 @@
 import Image from 'next/image'
+import { toast } from 'sonner';
+import Aos from 'aos'
 
 const RootDownload = () => {
+    Aos.init({
+        duration: 1000,
+        easing: 'ease-in-out'
+    });
     return (
         <div id='download' className='w-full flex flex-col gap-14 mt-35'>
             <div>
@@ -8,7 +14,8 @@ const RootDownload = () => {
                 <h2 className="text-[#121211] text-center text-[clamp(1.8rem,5vw,2.5rem)] font-semibold mt-4">Neuron for all your devices</h2>
             </div>
             <div className='flex gap-6 sm:px-10 max-lg:flex-col max-lg:items-center'>
-                <div className='flex flex-1 flex-col p-2 xl:pb-8 bg-white gap-8 lg:gap-12 rounded-4xl shadow-[0_0_8px_1px_rgba(0,0,0,0.15)]'>
+                <div data-aos="fade-up" 
+                className='flex flex-1 flex-col p-2 xl:pb-8 bg-white gap-8 lg:gap-12 rounded-4xl shadow-[0_0_8px_1px_rgba(0,0,0,0.15)]'>
                     <div className='rounded-3xl'>
                         <Image src="/images/d1.png" alt="browser" width={500} height={282} />
                     </div>
@@ -26,7 +33,8 @@ const RootDownload = () => {
                     </div>
                 </div>
 
-                <div className='flex flex-1 flex-col  p-2 xl:pb-8 bg-white  gap-8 lg:gap-12 rounded-4xl shadow-[0_0_8px_1px_rgba(0,0,0,0.15)]'>
+                <div data-aos="fade-up" data-aos-delay="200"
+                className='flex flex-1 flex-col  p-2 xl:pb-8 bg-white  gap-8 lg:gap-12 rounded-4xl shadow-[0_0_8px_1px_rgba(0,0,0,0.15)]'>
                     <div className='rounded-3xl'>
                         <Image src="/images/d2.png" alt="desktop" width={500} height={282} />
                     </div>
@@ -43,7 +51,20 @@ const RootDownload = () => {
                                                 <path d="M12.333 4.25073V16.2507M12.333 16.2507L15.833 12.7507M12.333 16.2507L8.83301 12.7507" stroke="#121211" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
                                         </div>
-                                        <a href="#" className='text-[#121211] text-sm/5 font-medium'>for {item}</a>
+                                        <a
+                                        {...item === "PWA" ? {
+                                            onClick: () =>
+                                                toast.info('This feature will be available soon.',
+                                                    {
+                                                        duration: 3000,
+                                                        style: {
+                                                            backgroundColor: '#1E2939',
+                                                            color: '#fff',
+                                                        }
+                                                    }
+                                                )
+                                        }: { href: '#' }}
+                                        className='text-[#121211] text-sm/5 font-medium'>for {item}</a>
                                     </button>
                                 ))
                             }
@@ -51,7 +72,8 @@ const RootDownload = () => {
                     </div>
                 </div>
 
-                <div className='flex flex-1 flex-col  p-2 xl:pb-8 bg-white  gap-8 lg:gap-12 rounded-4xl shadow-[0_0_8px_1px_rgba(0,0,0,0.15)]'>
+                <div data-aos="fade-up" data-aos-delay="300"
+                className='flex flex-1 flex-col  p-2 xl:pb-8 bg-white  gap-8 lg:gap-12 rounded-4xl shadow-[0_0_8px_1px_rgba(0,0,0,0.15)]'>
                     <div className='rounded-3xl'>
                         <Image src="/images/d3.png" alt="pwa" width={500} height={282} />
                     </div>
@@ -66,7 +88,18 @@ const RootDownload = () => {
                                         <path d="M12.333 4.25073V16.2507M12.333 16.2507L15.833 12.7507M12.333 16.2507L8.83301 12.7507" stroke="#121211" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                 </div>
-                                <a href="#" className='text-[#121211] text-sm/5 font-medium'>Download</a>
+                                <a
+                                onClick={() =>
+                                toast.info('This feature will be available soon.',
+                                    {
+                                        duration: 3000,
+                                        style: {
+                                            backgroundColor: '#121211',
+                                            color: '#fff',
+                                        }
+                                    }
+                                )}
+                                className='text-[#121211] text-sm/5 font-medium'>Download</a>
                             </button>
                         </div>
                     </div>
