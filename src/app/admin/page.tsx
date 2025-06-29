@@ -17,16 +17,16 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import OrderTable from '@/components/admin/order-table';
+import OrderTable from './components/order-table';
 import CircularProgress from '@/components/ui/circular-progress';
 import React from 'react';
 import { useProfileStore } from '@/stores/useProfileStore';
 import { UserModel } from '@/types/UserModel';
-import { YearChart } from '@/components/admin/year-chart';
-import { TotalUserChart } from '@/components/admin/total-user-chart';
-import { UserMonthChart } from '@/components/admin/user-month-chart';
-import { UserStorageChart } from '@/components/admin/user-storage-chart';
-import { TotalSaleChart } from '@/components/admin/total-sale-chart';
+import { YearChart } from './components/year-chart';
+import { TotalUserChart } from './components/total-user-chart';
+import { UserMonthChart } from './components/user-month-chart';
+import { UserStorageChart } from './components/user-storage-chart';
+import { TotalVisitorChart } from './components/total-visitor-chart';
 
 
 
@@ -88,7 +88,7 @@ const Home = () => {
                 <UserStorageChart data={users as UserModel[]} />
               </div>
               <div className="flex-1">
-                <TotalSaleChart data={users as UserModel[]} />
+                <TotalVisitorChart data={users as UserModel[]}/>
               </div>
             </div>
             <YearChart data={users as UserModel[]} />

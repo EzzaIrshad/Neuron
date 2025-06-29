@@ -12,6 +12,7 @@ interface CloudStore {
   fetchSharedWithMeFiles: () => Promise<void>;
   fetchSharedWithOthersFiles: () => Promise<void>;
   fetchLikedFiles: () => Promise<void>;
+  fetchAllFilesSize: (userId: string) => Promise<number>;
   createFolder: (folderName: string, parentId?: string) => Promise<void>;
   uploadFile: (file: File, parentId?: string, onProgress?: (progress: number) => void) => Promise<void>;
   updateFile: (fileId: string, updates: Partial<CloudModel>) => Promise<void>;
@@ -131,7 +132,29 @@ export const useCloudStore = create<CloudStore>((set, get) => {
       set({ files: data, loading: false });
     },
 
-    createFolder: async (folderName, parentId) => {
+    fetchAllFilesSize: async (userId) => {
+      set({ loading: true });
+
+      const { data, error } = await supabase
+        .from('cloud')
+        .select('size')
+        .eq('user_id', userId)
+        .eq('is_trashed', false);
+
+      if (error) {
+        console.error('Fetch files error:', error);
+        set({ loading: false });
+        throw new Error(error.message);
+      }
+
+      const totalSize = data.reduce((acc, file) => acc + (file.size || 0), 0);
+      
+      set({ loading: false, });
+      return totalSize;
+      
+    },
+
+    createFolder: async (folderName: string, parentId?: string) => {
       set({ uploading: true });
 
       const folderId = uuidv4();
@@ -290,24 +313,24 @@ export const useCloudStore = create<CloudStore>((set, get) => {
       }
     },
 
-shareFileWithUsers: async (fileId: string, userIds: string[]) => {
-  if (!fileId || userIds.length === 0) {
-    throw new Error('Invalid file ID or user IDs');
-  }
+    shareFileWithUsers: async (fileId: string, userIds: string[]) => {
+      if (!fileId || userIds.length === 0) {
+        throw new Error('Invalid file ID or user IDs');
+      }
 
-  const supabase = createClient();
-  const { error } = await supabase
-    .from('cloud')
-    .update({
-      shared_with: userIds,
-      is_shared: true,
-      updated_at: new Date().toISOString(),
-    })
-    .eq('id', fileId);
+      const supabase = createClient();
+      const { error } = await supabase
+        .from('cloud')
+        .update({
+          shared_with: userIds,
+          is_shared: true,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', fileId);
 
-  if (error) {
-    throw new Error(error.message);
-  }
-}
+      if (error) {
+        throw new Error(error.message);
+      }
+    }
   };
 });

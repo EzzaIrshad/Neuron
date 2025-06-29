@@ -29,8 +29,6 @@ import { UserModel } from "@/types/UserModel"
 
 export const description = "An interactive area chart"
 
-
-
 const chartConfig = {
   orders: {
     label: "Orders",
@@ -47,8 +45,6 @@ const chartConfig = {
 
 export function YearChart({ data }: { data: UserModel[] }) {
   const [timeRange, setTimeRange] = React.useState("90d")
-
-
 
 const chartData = React.useMemo(() => {
   if (!data || data.length === 0) return [];
@@ -75,7 +71,7 @@ const chartData = React.useMemo(() => {
 }, [data]);
   const filteredData = chartData.filter((item) => {
     const date = new Date(item.date)
-    const referenceDate = new Date("2024-06-30")
+    const referenceDate = new Date("2025-06-30")
     let daysToSubtract = 90
     if (timeRange === "30d") {
       daysToSubtract = 30
@@ -123,27 +119,27 @@ const chartData = React.useMemo(() => {
         >
           <AreaChart data={filteredData}>
             <defs>
-              <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="fillPaid" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--color-desktop)"
+                  stopColor="var(--color-paid)"
                   stopOpacity={0.8}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--color-desktop)"
+                  stopColor="var(--color-paid)"
                   stopOpacity={0.1}
                 />
               </linearGradient>
-              <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="fillFree" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--color-mobile)"
+                  stopColor="var(--color-free)"
                   stopOpacity={0.8}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--color-mobile)"
+                  stopColor="var(--color-free)"
                   stopOpacity={0.1}
                 />
               </linearGradient>

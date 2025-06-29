@@ -69,7 +69,7 @@ const RootFooter = () => {
                                     <h4 className='text-white text-lg font-bold'>{item.title}</h4>
                                     <ul className='space-y-2'>
                                         {item.links.map((link, index) => (
-                                            <li key={index} className='text-[#ebebeb] text-[1vw] cursor-pointer'>{link}</li>
+                                            <li key={index} className='text-[#ebebeb] text-[3vw] sm:text-[1vw] cursor-pointer'>{link}</li>
                                         ))}
                                     </ul>
                                 </div>
@@ -106,7 +106,7 @@ const RootFooter = () => {
                 </div>
 
                 <div className='flex max-lg:flex-col-reverse gap-y-5 justify-between py-[2vw] bg-[#1E2939]'>
-                    <p className='text-white text-[1vw]'>Copyright © 2025 Neuron | All Rights Reserved </p>
+                    <p className='text-white text-[2vw] max-sm:text-center sm:text-[1vw]'>Copyright © 2025 Neuron | All Rights Reserved </p>
                     <div className='flex gap-8 items-center cursor-pointer'>
                         {[
                             { icon: <GoogleIcon /> },

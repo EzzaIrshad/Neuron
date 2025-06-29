@@ -73,7 +73,9 @@ const RootOverview = () => {
                         loop
                         muted
                         playsInline
-                        style={{ display: 'block' }}
+                        preload="auto"
+                        className="bg-[#ADD3F3] block"
+                        
                     >
                         <source src="/videos/cloud.mp4" type="video/mp4" />
                         Your browser does not support the video tag.

@@ -43,7 +43,7 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo and Search */}
           <div className="flex items-center space-x-6">
-            <div className="w-[90px] h-[35px] flex items-center">
+            <div className="w-[95px] h-[40px] flex items-center">
               <LogoSvg />
             </div>
             
@@ -63,7 +63,7 @@ const Header = () => {
           </div>
 
           {/* Notification Button */}
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center">
             <button 
               className="relative p-1 rounded-full hover:bg-gray-100 transition-colors duration-200"
               onClick={() => setHasNotification(false)}

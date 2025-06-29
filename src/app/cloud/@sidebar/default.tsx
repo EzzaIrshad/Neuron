@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { JSX } from "react/jsx-runtime";
 import { toast } from "sonner";
 import {
@@ -104,8 +104,8 @@ const SidebarLink = ({
     <Link
       href={item.href}
       className={`flex items-center h-[6vh] gap-4 text-sm font-medium transition ${isActive
-          ? "pl-5 border-l-4 border-blue-600 bg-[#f5f9fc] text-blue-600"
-          : "pl-6 text-gray-700 hover:bg-[#f0f5fc]"
+        ? "pl-5 border-l-4 border-blue-600 bg-[#f5f9fc] text-blue-600"
+        : "pl-6 text-gray-700 hover:bg-[#f0f5fc]"
         }`}
     >
       {item.icon}
@@ -120,11 +120,35 @@ interface SidebarItem {
   icon: JSX.Element;
 }
 
-const StorageIndicator = () => {
-  const usedStorage = 2.2;
-  const totalStorage = 5;
-  const usedPercentage = Math.round((usedStorage / totalStorage) * 100);
 
+
+const StorageIndicator = () => {
+  const { fetchAllFilesSize } = useCloudStore();
+  const { user } = useAuthStore();
+  const [usedStorage, setUsedStorage] = useState<number>(0);
+  const [usedPercentage, setUsedPercentage] = useState<number>(0);
+  const TOTAL_QUOTA = 5 * 1024 * 1024 * 1024; // 5 GB in bytes
+
+  useEffect(() => {
+    if (!user?.id) return;
+
+    fetchAllFilesSize(user.id).then((size) => {
+      const percentage = (size / TOTAL_QUOTA) * 10000;
+      setUsedPercentage(percentage);
+
+      if (size < 1024 * 1024 * 1024) {
+        // Used < 1 GB: used in MB, remaining in GB
+        const usedMB = Number((size / (1024 * 1024)).toFixed(2));
+
+        setUsedStorage(usedMB);         // e.g., 0.36 MB
+      } else if (size >= 1024 * 1024 * 1024) {
+        // Used ≥ 1 GB: both in GB
+        const usedGB = Number((size / (1024 ** 3)).toFixed(2));
+
+        setUsedStorage(usedGB);         // e.g., 2.4 GB
+      }
+    });
+  }, [user?.id, fetchAllFilesSize, TOTAL_QUOTA]);
   return (
     <div>
       <div className="w-full bg-[#e0e0e0] rounded-full h-2.5">
@@ -134,7 +158,10 @@ const StorageIndicator = () => {
         />
       </div>
       <p className="text-gray-500 text-xs mt-1">
-        {usedStorage} GB used of {totalStorage} GB ({usedPercentage}%)
+        {usedStorage < 1024
+          ? `${usedStorage.toFixed(2)} MB`
+          : `${(usedStorage / 1024).toFixed(2)} GB`} used of 5 GB ({(usedPercentage).toFixed(1)}%)
+
       </p>
     </div>
   );
@@ -265,7 +292,7 @@ const UploadModal: React.FC<{
           </DialogTitle>
         </DialogHeader>
 
-        <DialogDescription className="sr-only"/>
+        <DialogDescription className="sr-only" />
 
         {uploads.length === 0 ? (
           <motion.div
@@ -289,15 +316,15 @@ const UploadModal: React.FC<{
                 onHoverStart={() => setHoveredItem(upload.id)}
                 onHoverEnd={() => setHoveredItem(null)}
                 className={`relative p-3 border rounded-lg transition-all ${upload.status === 'success' ? 'bg-green-50 border-green-100' :
-                    upload.status === 'failed' ? 'bg-red-50 border-red-100' :
-                      'bg-white border-gray-200'
+                  upload.status === 'failed' ? 'bg-red-50 border-red-100' :
+                    'bg-white border-gray-200'
                   } ${hoveredItem === upload.id ? 'shadow-md' : 'shadow-sm'
                   }`}
               >
                 <div className="flex items-start gap-3">
                   <div className={`flex-shrink-0 p-2 rounded-full transition-colors ${upload.status === 'success' ? 'bg-green-100 text-green-600' :
-                      upload.status === 'failed' ? 'bg-red-100 text-red-600' :
-                        'bg-blue-100 text-blue-600'
+                    upload.status === 'failed' ? 'bg-red-100 text-red-600' :
+                      'bg-blue-100 text-blue-600'
                     }`}>
                     {getFileIcon(upload.type, upload.status)}
                   </div>
@@ -307,8 +334,8 @@ const UploadModal: React.FC<{
                         {upload.name}
                       </p>
                       <span className={`text-xs font-semibold whitespace-nowrap ${upload.status === 'success' ? 'text-green-600' :
-                          upload.status === 'failed' ? 'text-red-600' :
-                            'text-blue-600'
+                        upload.status === 'failed' ? 'text-red-600' :
+                          'text-blue-600'
                         }`}>
                         {upload.status === 'failed' ? 'Failed' : `${Math.floor(upload.progress)}%`}
                       </span>
@@ -320,9 +347,9 @@ const UploadModal: React.FC<{
                         animate={{ width: `${upload.progress}%` }}
                         transition={{ duration: 0.5 }}
                         className={`h-full rounded-full absolute top-0 left-0 ${upload.status === 'success' ? 'bg-green-500' :
-                            upload.status === 'failed' ? 'bg-red-500' :
-                              upload.status === 'finalizing' ? 'bg-blue-400' :
-                                'bg-blue-600'
+                          upload.status === 'failed' ? 'bg-red-500' :
+                            upload.status === 'finalizing' ? 'bg-blue-400' :
+                              'bg-blue-600'
                           }`}
                       />
                       {upload.status === 'uploading' && (
@@ -554,7 +581,7 @@ export function CreateMenu({ parentId }: { parentId?: string }) {
           status: 'success',
           message: 'Upload Complete ✔️',
           progress: 100,
-          uploadedAmountMB:  actualSizeMB,
+          uploadedAmountMB: actualSizeMB,
           error: undefined,
         });
       } catch (error: unknown) {

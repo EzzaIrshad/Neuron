@@ -8,7 +8,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import Image from "next/image";
 
 const RootHeader = () => {
-    
+
     const { user, signOut } = useAuthStore();
 
     const [showSignin, setShowSignin] = useState(false);
@@ -81,7 +81,7 @@ const RootHeader = () => {
                 </div>
 
                 {showProfileCard && user && (
-                    <div className="absolute top-16 right-5 w-[440px] z-40">
+                    <div className="absolute top-16 right-5 w-[80vw] sm:w-[440px] z-40">
                         <ProfileCard
                             name={user.full_name}
                             email={user.email}
@@ -91,22 +91,22 @@ const RootHeader = () => {
                     </div>
                 )}
 
-                <div className="flex flex-col gap-12 max-w-7xl w-[80vw] mt-[10vh] mx-auto px-8">
-                    <h1 className="text-[clamp(2rem,4vw,4rem)] font-bold text-[#121211] text-center">
+                <div className="flex flex-col gap-12 max-w-7xl w-[75vw] mt-[10vh] mx-auto px-3 sm:px-8">
+                    <h1 className="text-[clamp(2rem,3.5vw,4rem)] font-bold text-[#121211] text-center">
                         AI-Powered Cloud Storage Reinvented with DNA, Graphene & Brain Signals
                     </h1>
-                    <p className="text-[#74726f] text-center text-[clamp(1rem,2vw,2rem)]">
+                    <p className="text-[#74726f] text-center text-[clamp(1rem,1.5vw,2rem)] sm:px-10">
                         Neuron fuses Artificial Intelligence, synthetic biology, and advanced materials to unlock the future of cloud storage and human-data interaction.
                     </p>
                     <div className="flex justify-center items-center gap-9 sm:flex-row flex-col">
                         <button
-                            style={{ background: "linear-gradient(336.57deg, rgba(0, 74, 185, 0.4) 32.06%, rgba(255, 245, 253, 0.4) 78.63%), linear-gradient(138.02deg, #0D6AFF 5.96%, #004AB9 96.24%)"}}
+                            style={{ background: "linear-gradient(336.57deg, rgba(0, 74, 185, 0.4) 32.06%, rgba(255, 245, 253, 0.4) 78.63%), linear-gradient(138.02deg, #0D6AFF 5.96%, #004AB9 96.24%)" }}
                             className="text-white px-5 py-2.5 rounded-full font-medium shadow-lg hover:shadow-[0_8px_15px_rgba(0,0,0,0.25)] hover:-translate-y-0.5 active:shadow-none active:translate-y-0 transition-all duration-300 ease-[cubic-bezier(.23,1,0.32,1)]">
 
                             Create account
                         </button>
-                        <button 
-                        style={{ background: "linear-gradient(147deg, #4B4E53 0%, #000000 74%)"}}
+                        <button
+                            style={{ background: "linear-gradient(147deg, #4B4E53 0%, #000000 74%)" }}
                             className="text-white px-5 py-2.5 rounded-full font-medium shadow-lg hover:shadow-[0_8px_15px_rgba(0,0,0,0.25)] hover:-translate-y-0.5 active:shadow-none active:translate-y-0 transition-all duration-300 ease-[cubic-bezier(.23,1,0.32,1)]">
                             Downloads
                         </button>
@@ -114,9 +114,8 @@ const RootHeader = () => {
                             href="#pricing"
                             className="text-[#121211] font-medium underline underline-offset-auto"
                         >
-                            See plans and pricing
+                            See plans and pricing 
                         </a>
-                        
                     </div>
                 </div>
 
@@ -128,6 +127,7 @@ const RootHeader = () => {
                         loop
                         muted
                         playsInline
+                        preload="auto"
                         style={{ display: "block" }}
                     >
                         <source src="/videos/overview_video.mp4" type="video/mp4" />
@@ -152,3 +152,31 @@ const RootHeader = () => {
 };
 
 export default RootHeader;
+
+// function VisitorCounter() {
+//     const [visitorCount, setVisitorCount] = useState(0);
+
+//     useEffect(() => {
+//         const fetchVisitorCount = async () => {
+//             try {
+//                 const { count, error } = await supabase
+//                     .from('visitors')
+//                     .select('*', { count: 'exact' });
+
+//                 if (error) throw error;
+
+//                 setVisitorCount(count ?? 0);
+//             } catch (error) {
+//                 console.error('Error fetching visitor count:', error);
+//             }
+//         };
+
+//         fetchVisitorCount();
+//     }, []);
+
+//     return (
+//         <div>
+//             <p>Total Visitors: {visitorCount}</p>
+//         </div>
+//     );
+// }

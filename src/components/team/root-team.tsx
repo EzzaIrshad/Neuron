@@ -24,7 +24,7 @@ const RootTeam = () => {
         },
         {
             name: "Aneela Kiran",
-            role: "BackEnd Developer",
+            role: "Back-End Developer",
             image: "/images/team_2.png",
             facebook: "https://www.facebook.com/",
             github: "https://github.com/Aneela-Kiran",

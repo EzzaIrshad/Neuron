@@ -8,6 +8,7 @@ interface ProfileStore {
   loading: boolean;
   fetchUsers: () => Promise<void>;
   reset: () => void;
+  disableUser: (userId: string) => Promise<void>;
 }
 
 const supabase = createClient();
@@ -103,6 +104,25 @@ export const useProfileStore = create<ProfileStore>((set) => {
     }
   };
 
+    // Add disableUser function
+  const disableUser = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ is_active: false })
+        .eq('id', id);
+      console.log('Disabled user successfully');
+      if (error) {
+        throw error;
+      }
+      // Optionally refresh users after disabling
+      await fetchUsers();
+    } catch (error) {
+      console.log(error, "Error");
+      toast.error('Error disabling user');
+    }
+  };
+
   // ✅ Only trigger once (store-level)
   fetchUsers().then(subscribeToUsers);
 
@@ -111,5 +131,8 @@ export const useProfileStore = create<ProfileStore>((set) => {
     loading: false,
     fetchUsers,
     reset,
+    disableUser,
   };
+
 });
+

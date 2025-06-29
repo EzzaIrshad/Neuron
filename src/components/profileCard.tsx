@@ -12,7 +12,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ name, email, profilePic, onSi
         <article className="overflow-hidden pt-[3vh] flex flex-col gap-5 bg-white rounded-xl border border-zinc-300 max-w-[440px] shadow-[0_0_48px_rgba(0,0,0,0.15)]">
             <UserProfileHeader profilePic={profilePic || "/images/user.png"} name={name || "User"} email={email || "No email provided"} />
 
-            <section className="flex gap-4 px-6 w-full text-sm text-[#121211]">
+            <section className="flex max-sm:flex-col gap-4 px-6 w-full text-sm text-[#121211]">
                 <button
                     className="flex flex-1 items-center justify-center gap-2 px-4 py-2 rounded-3xl border border-[#cfcfcf] hover:bg-gray-100 transition"
                     aria-label="Manage Account"
@@ -40,7 +40,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ name, email, profilePic, onSi
             </section>
 
             <footer className="flex justify-center items-center py-4 w-full text-sm border-t bg-[#efefef] border-[#d5d5d5] text-neutral-900">
-                <span>© 2025 Paandaaa</span>
+                <span>© 2025 Neuron</span>
             </footer>
         </article>
     );

@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth/AuthProvider";
+import {TrackVisit} from "@/components/TrackVisit"
 
 // Setup your custom font
 // const segoeUI = localFont({
@@ -40,6 +41,7 @@ export default function RootLayout({
       <body >
         <Toaster />
         <AuthProvider>
+          <TrackVisit />
           {children}
         </AuthProvider>
       </body>
