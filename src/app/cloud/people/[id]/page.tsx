@@ -6,17 +6,18 @@ import { createClient } from "@/lib/supabase/server";
 // import SharedHeader from '../../components/shared_header';
 // import RecentFiles from '../../components/recentFiles';
 
-interface ProfileDetailProps {
-  params: { id: string }
+type Props = {
+  params: Promise<{ id: string }>;
 };
 
-export default async function ProfileDetail({ params }: ProfileDetailProps) {
+export default async function ProfileDetail({ params }: Props) {
 
+    const resolvedParams = await params;
     const supabase = await createClient();
     const { data: user, error } = await supabase
         .from('shared_user_profiles')
         .select("name, avatar_url")
-        .eq('id', params.id)
+        .eq('id', resolvedParams.id)
         .single();
 
     if (!user || error) return notFound();
