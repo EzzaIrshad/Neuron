@@ -20,7 +20,7 @@ const StoragePage = () => {
       const percentage = (size / TOTAL_QUOTA) * 1000;
       setUsedPercentage(percentage);
 
-      if (size < 1024 * 1024) {
+      if (size > 0 && size < 1024 * 1024) {
         setUsed(Number((size / (1024 * 1024)).toFixed(2)));
         setRemaining(4.99);
       }

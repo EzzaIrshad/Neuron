@@ -31,7 +31,7 @@ export default function ShareDialog({ fileId, open, onOpenChange }: ShareDialogP
     try {
       const emails = emailInput
         .split(',')
-        .map((e) => e.trim())
+        .map((e) => e.trim().toLowerCase())
         .filter((e) => e.length > 0);
 
       if (emails.length === 0) {
@@ -40,22 +40,21 @@ export default function ShareDialog({ fileId, open, onOpenChange }: ShareDialogP
         return;
       }
 
-      console.log(emails)
+      const { data: allProfiles } = await supabase.from('profiles').select('*');//change
+      console.log('All profiles:', allProfiles);
 
       const { data: users, error } = await supabase
         .from('profiles')
         .select('id,email')
-        .in('email', emails);
-
-        console.log('Fetched users:', users); 
+        .or(emails.map(e => `email.ilike.${e}`).join(','));
 
       if (error || !users) {
         throw new Error('Failed to fetch user IDs for provided emails');
       }
 
-      
-
-      const userIds = users.map((u) => u.id).filter((id) => id !== currentUser?.id);
+      const userIds = users
+        .map((u) => u.id)
+        .filter((id) => id !== currentUser?.id);
 
       if (userIds.length === 0) {
         toast.error('No valid users found to share with');
@@ -87,7 +86,7 @@ export default function ShareDialog({ fileId, open, onOpenChange }: ShareDialogP
 
         <Input
           type="text"
-          placeholder="Enter email(s), comma separated"
+          placeholder="Enter email"
           value={emailInput}
           onChange={(e) => setEmailInput(e.target.value)}
         />
@@ -102,7 +101,3 @@ export default function ShareDialog({ fileId, open, onOpenChange }: ShareDialogP
     </Dialog>
   );
 }
-
-
-
-

@@ -5,10 +5,12 @@ import { CloudModel } from '@/types/CloudModel';
 import { RealtimeChannel } from '@supabase/supabase-js';
 
 interface CloudStore {
-  files: CloudModel[];
+  files: CloudModel[];                         // for uploaded files
+  sharedFilesWithEmails: CloudModel[];        // for shared files with email
   uploading: boolean;
   loading: boolean;
   fetchFiles: (userId: string) => Promise<void>;
+  fetchFilesWithEmails: (userId: string) => Promise<void>;
   fetchSharedWithMeFiles: () => Promise<void>;
   fetchSharedWithOthersFiles: () => Promise<void>;
   fetchLikedFiles: () => Promise<void>;
@@ -28,6 +30,7 @@ export const useCloudStore = create<CloudStore>((set, get) => {
 
   return {
     files: [],
+    sharedFilesWithEmails: [],
     uploading: false,
     loading: false,
 
@@ -82,6 +85,21 @@ export const useCloudStore = create<CloudStore>((set, get) => {
             console.log('Realtime status:', status);
           });
       }
+    },
+
+    fetchFilesWithEmails: async (userId) => {
+      const { data, error } = await supabase
+        .from("shared_files_with_emails")
+        .select("*")
+        .eq('user_id', userId);
+
+      if (error) {
+        console.error("Fetch error:", error);
+        return;
+      }
+
+      // ✅ Don't overwrite uploaded files
+      set({ sharedFilesWithEmails: data });
     },
 
     fetchSharedWithMeFiles: async () => {
@@ -148,10 +166,10 @@ export const useCloudStore = create<CloudStore>((set, get) => {
       }
 
       const totalSize = data.reduce((acc, file) => acc + (file.size || 0), 0);
-      
+
       set({ loading: false, });
       return totalSize;
-      
+
     },
 
     createFolder: async (folderName: string, parentId?: string) => {
@@ -306,7 +324,7 @@ export const useCloudStore = create<CloudStore>((set, get) => {
     },
 
     reset: () => {
-      set({ files: [], uploading: false, loading: false });
+      set({ files: [], sharedFilesWithEmails: [], uploading: false, loading: false });
       if (channel) {
         channel.unsubscribe();
         channel = null;
@@ -319,18 +337,30 @@ export const useCloudStore = create<CloudStore>((set, get) => {
       }
 
       const supabase = createClient();
-      const { error } = await supabase
-        .from('cloud')
+
+      const { data: fileData, error: fetchError } = await supabase
+        .from("cloud")
+        .select("shared_with")
+        .eq("id", fileId)
+        .single();
+
+      if (fetchError) throw new Error("Failed to fetch current file data");
+
+      const currentSharedWith = fileData?.shared_with || [];
+
+      const newSharedWith = [...new Set([...currentSharedWith, ...userIds])];
+      const { error: updateError } = await supabase
+        .from("cloud")
         .update({
-          shared_with: userIds,
+          shared_with: newSharedWith,
           is_shared: true,
           updated_at: new Date().toISOString(),
         })
-        .eq('id', fileId);
+        .eq("id", fileId);
 
-      if (error) {
-        throw new Error(error.message);
+      if (updateError) {
+        throw new Error(updateError.message);
       }
-    }
+    },
   };
 });

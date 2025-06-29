@@ -93,23 +93,27 @@ export const useSharedWithOthersStore = create<SharedWithOthersStore>((set, get)
     }
   },
 
-  shareFile: async (fileId, userEmailOrId) => {
-    let targetUserId = userEmailOrId;
+    // ✅ Cleaned up shareFile function
+ shareFile: async (fileId, userEmailOrId) => {
+  const supabase = createClient();
 
-    // If input is an email, find the user ID from profiles
-    if (userEmailOrId.includes('@')) {
-      const { data: user, error } = await supabase
-        .from('profiles')
-        .select('id')
-        .eq('email', userEmailOrId)
-        .single();
+  const { data: { user: currentUser } } = await supabase.auth.getUser();
+  if (!currentUser) throw new Error('User not authenticated');
 
-      if (error || !user) {
-        throw new Error('User not found with this email.');
-      }
+  // Find user to share with
+  const { data: user, error } = await supabase
+    .from('profiles')
+    .select('id')
+    .ilike('email', userEmailOrId) 
+    .single();
 
-      targetUserId = user.id;
-    }
+  if (error || !user) {
+    throw new Error('User not found with this email.');
+  }
+
+  const targetUserId = user.id;
+
+  // Fetch current shared_with list
 
     const { data: fileData, error: fetchError } = await supabase
       .from('cloud')
@@ -139,8 +143,11 @@ export const useSharedWithOthersStore = create<SharedWithOthersStore>((set, get)
       .eq('id', fileId);
 
     if (updateError) {
-      throw new Error(`Failed to share file: ${updateError.message}`);
-    }
+    throw new Error(`Failed to update cloud record: ${updateError.message}`);
+  }
+
+  // ✅ Success
+  console.log('✅ File shared successfully');
   },
 
   unshareFile: async (fileId, userIdsToRemove) => {

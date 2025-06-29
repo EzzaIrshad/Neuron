@@ -2,31 +2,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react'
-import SharedHeader from '../../components/shared_header';
-import RecentFiles from '../../components/recentFiles';
+import { createClient } from "@/lib/supabase/server";
+// import SharedHeader from '../../components/shared_header';
+// import RecentFiles from '../../components/recentFiles';
 
+export default async function ProfileDetail({ params }: { params: { id: string } }) {
 
+    const supabase = await createClient();
+    const { data: user, error } = await supabase
+        .from('shared_user_profiles')
+        .select("name, avatar_url")
+        .eq('id', params.id)
+        .single();
 
-
-export default async function ProfileDetail({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params;
-
-    const profiles = {
-        '1': { name: "Alina Hania", avatar: "/images/p1.png" },
-        '2': { name: "John Doe", avatar: "/images/p2.png" },
-        '3': { name: "Richard", avatar: "/images/p3.png" },
-        '4': { name: "Alina Hania", avatar: "/images/p1.png" },
-        '5': { name: "Alina Hania", avatar: "/images/p1.png" },
-        '6': { name: "John Doe", avatar: "/images/p2.png" },
-        '7': { name: "Richard", avatar: "/images/p3.png" },
-        '8': { name: "Alina Hania", avatar: "/images/p1.png" },
-    }
-
-    const profile = profiles[id as keyof typeof profiles];
-
-    if (!profile) return notFound();
-    console.log("Params", params);
-
+    if (!user || error) return notFound();
     return (
         <div className="flex flex-col gap-6 w-full text-4xl h-full px-15.5">
             <Link href={"/cloud/people"} className='flex gap-3 self-stretch items-center py-[3vh]  border-b border-b-[#A2A2A2]'>
@@ -37,16 +26,18 @@ export default async function ProfileDetail({ params }: { params: Promise<{ id: 
             </Link>
             <div className='flex gap-4 items-center'>
                 <div className='flex gap-2.5 items-center'>
-                    <Image src={profile.avatar} alt="Profile" width={40} height={40} className='rounded-full'/>
-                    <h1 className='text-[#181818] text-[22px] font-semibold'>{profile.name}</h1>
+                    {user.avatar_url && (
+                        <>
+                            <Image src={user.avatar_url} alt="Profile" width={40} height={40} className="rounded-full" />
+                            <h1 className='text-[#181818] text-[22px] font-semibold'>{user.name}</h1>
+                        </>
+                    )}
                 </div>
-                <div className='grow 2xl:ml-10'>
-                <SharedHeader id="people"/>
-                </div>
-            </div>
-            <div className='h-[60vh]'>
-                <RecentFiles id='memory' />
-            </div>
+            </div >
         </div>
     )
 }
+
+            {/* // <div className='h-[60vh]'>
+            //     <RecentFiles id='memory' />
+            // </div> */}
