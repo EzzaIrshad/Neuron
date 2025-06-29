@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 // import SharedHeader from '../../components/shared_header';
 // import RecentFiles from '../../components/recentFiles';
 
-type ProfileDetailProps = {
+interface ProfileDetailProps {
   params: { id: string }
 };
 
