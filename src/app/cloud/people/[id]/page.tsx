@@ -6,7 +6,11 @@ import { createClient } from "@/lib/supabase/server";
 // import SharedHeader from '../../components/shared_header';
 // import RecentFiles from '../../components/recentFiles';
 
-export default async function ProfileDetail({ params }: { params: { id: string } }) {
+type ProfileDetailProps = {
+  params: { id: string }
+};
+
+export default async function ProfileDetail({ params }: ProfileDetailProps) {
 
     const supabase = await createClient();
     const { data: user, error } = await supabase
