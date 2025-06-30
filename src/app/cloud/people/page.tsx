@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
+import { useAuthStore } from "@/stores/useAuthStore";
 
 interface Person {
     id: string;
@@ -15,6 +16,7 @@ interface Person {
 export default function Page() {
     const [people, setPeople] = useState<Person[]>([]);
     const [loading, setLoading] = useState(true);
+    const {user} = useAuthStore();
 
     useEffect(() => {
         const fetchPeople = async () => {
@@ -23,7 +25,8 @@ export default function Page() {
             // Query for users who were shared files (unique users)
             const { data, error } = await supabase
                 .from('shared_user_profiles') // make sure this view/table exists
-                .select('id, name, email, avatar_url, file_count');
+                .select('id, name, email, avatar_url, file_count')
+                .eq("user_id",user?.id)
 
             if (!error && data) {
                 setPeople(data);
@@ -51,7 +54,7 @@ export default function Page() {
                             href={`/cloud/people/${person.id}`}
                             key={person.id}
                         >
-                            <article className="flex flex-col gap-[3vh] p-4 bg-white rounded-lg 2xl:w-58 w-43 shadow-[0px_0px_4px_rgba(0,0,0,0.15)]"
+                            <article className="flex flex-col gap-[3vh] p-4 bg-white rounded-lg xl:w-58 w-43 shadow-[0px_0px_4px_rgba(0,0,0,0.15)]"
                             >
                                 <header className="flex justify-between items-start w-full text-[10px] font-medium tracking-wide">
                                     {person.avatar_url ? (

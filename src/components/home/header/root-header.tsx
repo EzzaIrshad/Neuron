@@ -101,14 +101,25 @@ const RootHeader = () => {
                     <div className="flex justify-center items-center gap-9 sm:flex-row flex-col">
                         <button
                             style={{ background: "linear-gradient(336.57deg, rgba(0, 74, 185, 0.4) 32.06%, rgba(255, 245, 253, 0.4) 78.63%), linear-gradient(138.02deg, #0D6AFF 5.96%, #004AB9 96.24%)" }}
-                            className="text-white px-5 py-2.5 rounded-full font-medium shadow-lg hover:shadow-[0_8px_15px_rgba(0,0,0,0.25)] hover:-translate-y-0.5 active:shadow-none active:translate-y-0 transition-all duration-300 ease-[cubic-bezier(.23,1,0.32,1)]">
+                            className="text-white px-5 py-2.5 rounded-full font-medium shadow-lg hover:shadow-[0_8px_15px_rgba(0,0,0,0.25)] hover:-translate-y-0.5 active:shadow-none active:translate-y-0 transition-all duration-300 ease-[cubic-bezier(.23,1,0.32,1)]"
+                            onClick={user ? handleSignOut : () => setShowSignin(true)}
+                            >
 
-                            Create account
+                            {user ? "Sign out" : "Create account"}
                         </button>
                         <button
                             style={{ background: "linear-gradient(147deg, #4B4E53 0%, #000000 74%)" }}
-                            className="text-white px-5 py-2.5 rounded-full font-medium shadow-lg hover:shadow-[0_8px_15px_rgba(0,0,0,0.25)] hover:-translate-y-0.5 active:shadow-none active:translate-y-0 transition-all duration-300 ease-[cubic-bezier(.23,1,0.32,1)]">
-                            Downloads
+                            className="text-white px-5 py-2.5 rounded-full font-medium shadow-lg hover:shadow-[0_8px_15px_rgba(0,0,0,0.25)] hover:-translate-y-0.5 active:shadow-none active:translate-y-0 transition-all duration-300 ease-[cubic-bezier(.23,1,0.32,1)]"
+                            onClick={() => {
+                                const link = document.createElement("a");
+                                link.href = "/neuron.exe";
+                                link.download = "neuron.exe";
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                            }}
+                            >
+                            Download App
                         </button>
                         <a
                             href="#pricing"
