@@ -132,16 +132,16 @@ const RootHeader = () => {
 
                 <div className="mt-14">
                     <video
-                        width={1600}
+                        width={1500}
                         height={1073}
                         autoPlay
                         loop
                         muted
                         playsInline
                         preload="auto"
-                        style={{ display: "block" }}
+                        style={{ display: "block", marginInline: "auto" }}
                     >
-                        <source src="/videos/overview_video.mp4" type="video/mp4" />
+                        <source src="/videos/overview_video.webm" type="video/webm" />
                         Your browser does not support the video tag.
                     </video>
                 </div>

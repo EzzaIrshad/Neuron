@@ -38,7 +38,7 @@ export default function Page() {
         };
 
         fetchPeople();
-    }, []);
+    }, [user?.id]);
 
     return (
         <div className="flex flex-col gap-6 w-full text-4xl h-full px-15.5">

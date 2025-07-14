@@ -77,7 +77,7 @@ const RootOverview = () => {
                         className="bg-[#ADD3F3] block"
                         
                     >
-                        <source src="/videos/cloud.mp4" type="video/mp4" />
+                        <source src="/videos/cloud.webm" type="video/webm" />
                         Your browser does not support the video tag.
                     </video>
                     </div>

@@ -443,7 +443,15 @@ export default function Home() {
       {previewImageSrc && (
         <Dialog open={!!previewImageSrc} onOpenChange={() => setPreviewImageSrc(null)}>
           <DialogContent className="w-full h-auto p-0 overflow-hidden" >
-            <Image src={previewImageSrc} alt="Preview" width={1920} height={1080} className="h-auto" />
+            <DialogTitle className="sr-only">Preview</DialogTitle>
+            {previewImageSrc.endsWith(".mp4") ? (
+              <video controls className="w-full h-auto">
+                <source src={previewImageSrc} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <Image src={previewImageSrc} alt="Preview" width={1920} height={1080} className="h-auto" />
+            )}
           </DialogContent>
         </Dialog>
       )}
