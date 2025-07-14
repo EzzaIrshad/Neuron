@@ -138,6 +138,7 @@ const RootHeader = () => {
                         loop
                         muted
                         playsInline
+                        poster="images/hero-img.png"
                         preload="auto"
                         style={{ display: "block", marginInline: "auto" }}
                     >
