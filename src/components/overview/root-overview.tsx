@@ -37,8 +37,8 @@ const RootOverview = () => {
                 <div className="px-5 py-2 bg-[#e7e5e2] rounded-[56px] font-medium">AI in Neuron</div>
             </div>
 
-            <div className="flex items-center justify-between max-lg:flex-col-reverse max-2xl:gap-25">
-                <div className="flex sm:w-[45vw] flex-col gap-12">
+            <div className="flex items-center justify-between max-lg:flex-col-reverse gap-25">
+                <div className="flex md:w-[45vw] flex-col gap-12">
                     {
                         features.map((feature, index) => (
                             <div key={index} className="border-l-[2px] border-l-[#121211] pl-8 ">
@@ -65,16 +65,16 @@ const RootOverview = () => {
                     }
                 </div>
 
-                <div className="sm:p-10">
+                <div className="sm:p-10 2xl:p-16">
                     <video
-                        width={930}
+                        width={800}
                         height={600}
+                        poster="/images/cloud-img.png"
                         autoPlay
                         loop
                         muted
                         playsInline
                         preload="auto"
-                        className="bg-[#ADD3F3] block"
                         
                     >
                         <source src="/videos/cloud.webm" type="video/webm" />

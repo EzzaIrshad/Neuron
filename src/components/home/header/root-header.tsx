@@ -130,21 +130,22 @@ const RootHeader = () => {
                     </div>
                 </div>
 
-                <div className="mt-14">
-                    <video
-                        width={1500}
-                        height={1073}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        poster="images/hero-img.png"
-                        preload="auto"
-                        style={{ display: "block", marginInline: "auto" }}
-                    >
-                        <source src="/videos/overview_video.webm" type="video/webm" />
-                        Your browser does not support the video tag.
-                    </video>
+                <div className="mt-14 flex justify-center relative w-full" style={{ paddingTop: "56.25%" }}>
+                    <iframe
+                        src="https://player.vimeo.com/video/1101279287?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0&controls=0"
+                        allow="autoplay; fullscreen; picture-in-picture;  "
+                        title="output"
+                        
+                        style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%",
+                            borderRadius: "16px",
+                            border: "none"
+                        }}
+                    ></iframe>
                 </div>
             </div>
 
