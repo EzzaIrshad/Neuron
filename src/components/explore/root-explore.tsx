@@ -26,7 +26,7 @@ const RootExplore = () => {
                         </defs>
                     </svg>
                 </div>
-                <div className='absolute top-1 -right-5 sm:left-100 -z-10 sm:w-[50vw]'>
+                <div className='absolute top-1 -right-5 md:max-lg:left-90 lg:left-100 -z-10 sm:w-[50vw]'>
                     <svg className='w-full h-full' viewBox="0 0 1349 1608" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g filter="url(#filter0_f_995_124)">
                             <path d="M814 600L864.516 755.471H1027.99L895.736 851.558L946.252 1007.03L814 910.942L681.748 1007.03L732.264 851.558L600.012 755.471H763.484L814 600Z" fill="#B406B4" />
