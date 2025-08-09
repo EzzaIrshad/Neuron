@@ -68,7 +68,7 @@ const RootTeam = () => {
                                                         target="_blank"
                                                         key={i}
                                                         href={href}
-                                                        className="hover:shadow-[0_8px_15px_rgba(0,0,0,0.25)] hover:-translate-y-0.5 active:shadow-none active:translate-y-0 bg-transparent rounded-full transition-all duration-300 ease-[cubic-bezier(.23,1,0.32,1)] cursor-pointer"
+                                                        className="[&>*]:hover:drop-shadow-[0_8px_10px_rgba(0,0,0,0.3)] hover:-translate-y-0.5 active:shadow-none active:translate-y-0 bg-transparent transition-all duration-300 ease-[cubic-bezier(.23,1,0.32,1)] cursor-pointer"
                                                     >
                                                         {icon}
                                                     </a>
